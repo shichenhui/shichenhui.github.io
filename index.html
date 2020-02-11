@@ -259,6 +259,295 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/11/C++变量、限定符/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/11/C++变量、限定符/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-11T10:42:51+08:00">
+                2020-02-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="C-算数类型变量"><a href="#C-算数类型变量" class="headerlink" title="C++算数类型变量"></a>C++算数类型变量</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>含义</th>
+<th>最小尺寸</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bool</td>
+<td>布尔类型</td>
+<td>未定义</td>
+</tr>
+<tr>
+<td>char</td>
+<td>字符</td>
+<td>8位</td>
+</tr>
+<tr>
+<td>wchar_t</td>
+<td>宽字符</td>
+<td>16位</td>
+</tr>
+<tr>
+<td>char16_t</td>
+<td>Unicode字符</td>
+<td>16位</td>
+</tr>
+<tr>
+<td>char32_t</td>
+<td>Unicode字符</td>
+<td>32位</td>
+</tr>
+<tr>
+<td>short</td>
+<td>短整型</td>
+<td>16 位</td>
+</tr>
+<tr>
+<td>int</td>
+<td>整形</td>
+<td>16 位</td>
+</tr>
+<tr>
+<td>long</td>
+<td>长整型</td>
+<td>32位</td>
+</tr>
+<tr>
+<td>long long</td>
+<td>长整型</td>
+<td>64位</td>
+</tr>
+<tr>
+<td>float</td>
+<td>单精度浮点型</td>
+<td>6位有效数字</td>
+</tr>
+<tr>
+<td>double</td>
+<td>双精度浮点型</td>
+<td>10位有效数字</td>
+</tr>
+<tr>
+<td>long double</td>
+<td>拓展精度浮点数</td>
+<td>10位有效数字</td>
+</tr>
+</tbody></table>
+<p>​    除去布尔型和拓展的字符型之外，其他的整数可以划分为带符号的和无符号的，无符号的只能表示大于等于0的数。int、short、long、long long、都是带符号的，在前面加上unsigned就得到无符号类型。</p>
+<p>选择类型时：</p>
+<ul>
+<li>知晓数值不可能为负时，选用无符号类型。</li>
+<li>使用int执行整形运算。如果int不够，选用long long，因为long和int一般有一样的尺寸。</li>
+<li>在算术表达式中不用使用char 和bool。</li>
+<li>执行浮点运算用double，别用float。因二者计算代价相差无几，甚至一些机器上double比float还快。</li>
+</ul>
+<h2 id="字面值常量"><a href="#字面值常量" class="headerlink" title="字面值常量"></a>字面值常量</h2><p>42，”like”， ‘k’，这些都是字面值常量。<br>可以指定字面值常量的类型：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">L'a'    <span class="comment">//宽字符型字面值，类型是wchat_t</span></span><br><span class="line"><span class="string">u8"hi!"</span>  <span class="comment">// utf-8字符串字面值，有8位编码一个Unicode字符</span></span><br><span class="line"><span class="number">42U</span>LL    <span class="comment">// 42是unsigned long long型</span></span><br><span class="line"><span class="number">3.1415926L</span>  <span class="comment">//long double 型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="指定字面值类型"><a href="#指定字面值类型" class="headerlink" title="指定字面值类型"></a>指定字面值类型</h3><ul>
+<li>字符和字符串字面值</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>含义</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u</td>
+<td>Unicode16字符</td>
+<td>char16_t</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Unicode32字符</td>
+<td>char32_t</td>
+</tr>
+<tr>
+<td>L</td>
+<td>宽字符</td>
+<td>wchar_t</td>
+</tr>
+<tr>
+<td>u8</td>
+<td>UTF-8（仅用于字符串字面常量）</td>
+<td>char</td>
+</tr>
+</tbody></table>
+<ul>
+<li>整数字面值<table>
+<thead>
+<tr>
+<th>后缀</th>
+<th>最小匹配类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u / U</td>
+<td>unsigned</td>
+</tr>
+<tr>
+<td>l / L</td>
+<td>long</td>
+</tr>
+<tr>
+<td>ll  / LL</td>
+<td>long long</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<ul>
+<li>浮点型字面值</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>后缀</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>f /F</td>
+<td>float</td>
+</tr>
+<tr>
+<td>l  /  L</td>
+<td>long double</td>
+</tr>
+</tbody></table>
+<h2 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h2><ul>
+<li><p>初始化：创建变量的同时赋予初值</p>
+</li>
+<li><p>赋值：把对象当前值擦除，用新值代替</p>
+</li>
+</ul>
+<p>​       变量若在创建时没有赋值，会被系统赋予一个默认值。默认值是什么有变量的类型决定，与定义变量的位置也有关。</p>
+<h2 id="变量的声明和定义"><a href="#变量的声明和定义" class="headerlink" title="变量的声明和定义"></a>变量的声明和定义</h2><p>​    程序可以分解为多个文件，分别独立编译，这样则需要有在文件间共享代码的方法。例如，一个文件中的代码可能需要使用另一个文件中定义的变量。一个实际的例子是std::cout，它定义于标准库，却能被我们写的程序使用。</p>
+<p>​    声明使得名字为程序所知，一个文件要想使用别的文件定义的变量，必须包含对这个变量名字的声明。而定义是负责创建与名字相关联的实体。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i;       <span class="comment">// 声明i</span></span><br><span class="line"><span class="keyword">int</span> j;              <span class="comment">//定义j</span></span><br></pre></td></tr></table></figure>
+
+<p>任何包含显式初始化的声明即成为定义。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">double</span> pi = <span class="number">3.1415</span>;       <span class="comment">// 定义</span></span><br></pre></td></tr></table></figure>
+
+<p>变量只可以被定义一次，但可以被声明多次。</p>
+<p>在函数体内部，如果试图初始化一个有extern关键字标记的变量，将引发错误。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/26/文学摘抄-非暴力沟通-1/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1188,7 +1477,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1243,7 +1532,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
