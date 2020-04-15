@@ -873,93 +873,140 @@
 
       
         
+          <p>图像增强在有关图片的训练中是不可或缺的部分。原有数据集中的图片的泛化程度不高，不能代表所有此类型的图片，并且数据集图片的清晰度、亮度、图片中物体的大小相对来说比较片面。在原有数据集上训练好模型后，拿来一张高亮度的图片就会有很大可能识别不出来。所以我们有必要扩充数据集来提高模型的泛化程度。</p>
+<p>数据增强是对原有图片的亮度、对比度、色相等随机调整，这样能使数据集涵盖的方面更广，扩充了数据集。对提高模型的泛化程度很有必要。</p>
+<p>下面介绍一些TensorFlow中图片增强的常用方法。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/03/图像增强/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/20/mysql-4-查询练习/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/20/mysql-4-查询练习/" itemprop="url">SQL常用查询语句</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-20T00:00:00+08:00">
+                2020-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-            <p>图像增强在有关图片的训练中是不可或缺的部分，它能</p>
-<p><strong>读取图像：</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img_raw = tf.read_file(<span class="string">'test.jpg'</span>)</span><br></pre></td></tr></table></figure>
-
-<p><strong>解码图像：</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.decode_jpeg(img_raw, channels=<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-<p>读取图像读取的是图片文件源信息，是字符串，解码后才是三维张量。</p>
-<p><strong>1. 翻转</strong></p>
-<ul>
-<li><p>上下翻转</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.flip_up_down(img)</span><br></pre></td></tr></table></figure>
-
-<p>​</p>
-</li>
-<li><p>左右反转</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.flip_left_right(img)</span><br></pre></td></tr></table></figure>
-
-<p>​</p>
-</li>
-<li><p>随机上下翻转</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.random_flip_up_down(img)</span><br></pre></td></tr></table></figure>
-
-<p>​</p>
-</li>
-<li><p>随机左右翻转</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.random_flip_left_right(img)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>2. 亮度 / 光照度</strong></p>
-<ul>
-<li><p>调整亮度</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 后面那个参数时亮度，范围-1到1，</span></span><br><span class="line"><span class="comment"># -1最暗（全黑），0是原图，1会变最亮（全白）</span></span><br><span class="line">img = tf.image.adjust_brightness(img, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>随机亮度</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># max_delta 表示随机亮度的范围是 [-max_delta,max_delta]</span></span><br><span class="line"><span class="comment"># max_delta 需要给一个大于零的数</span></span><br><span class="line"><span class="comment"># 设定一个范围可以防止亮度过大或过小导致图片失真</span></span><br><span class="line">img = tf.image.random_brightness(img,max_delta)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>3. 对比度</strong></p>
-<ul>
-<li><p>调整对比度</p>
-<p> 函数原型：def adjust_contrast(images, contrast_factor)</p>
-<p> 函数的官方解释：对比度是每个图像的每个通道（RGB）独立调整。<br> 对任意通道的运算是：(x - mean) * contrast_factor + mean ，<br> 其中x是此通道某点的像素值，mean是此通道像素的均值。<br> 官方并没有给 contrast_factor 的取值范围。</p>
-<p> contrast_factor 可以理解成对比度增加或减小多少倍，1是原图。</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.adjust_contrast(img,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>随机对比度</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># lower, upper 是对随机比度的限制范围 </span></span><br><span class="line">img = tf.image.random_contrast(img, lower, upper, seed=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>4. 饱和度</strong></p>
-<ul>
-<li><p>调整饱和度<br>调整饱和度也有一个对应的算法。1是原图。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.adjust_saturation(img,<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>随机饱和度</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># </span></span><br><span class="line">img = tf.image.random_saturation(image, lower, upper, seed=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>5. 色相 / 色度</strong></p>
-<ul>
-<li><p>调整色度</p>
-<p>色度的变化对图像颜色影响较大，一般delta取值[-0.1, 0.1] 就行</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># delta 是调整值，取值范围是[-1,1]</span></span><br><span class="line">img = tf.image.adjust_hue(image, delta, name=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>随机色度</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># delta 的随机范围是 [-max_delta, max_delta]</span></span><br><span class="line"><span class="comment"># max_delta 需要在区间[0, 0.5]</span></span><br><span class="line">img = tf.image.random_hue(image, max_delta, seed=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>6. 标准化</strong></p>
-<p>将图像的像素调整为均值为0，方差为1。</p>
-<p>标准化后图像像素直接显示出来效果会严重失真。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.per_image_standardization(img)</span><br></pre></td></tr></table></figure>
-
-<p><strong>7. 随机旋转</strong></p>
-<p><strong>8. 剪切</strong></p>
-<p><strong>完整的代码如下：</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readImg_3</span><span class="params">()</span>:</span></span><br><span class="line">    img_raw = tf.read_file(<span class="string">'test.jpg'</span>)</span><br><span class="line">    img = tf.image.decode_jpeg(img_raw, channels=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">        <span class="comment">#img = tf.image.random_brightness(img,0.5)</span></span><br><span class="line">        <span class="comment"># img = tf.image.adjust_brightness(img, -1)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.adjust_contrast(img,2)</span></span><br><span class="line">        <span class="comment">#img = tf.image.random_contrast(img, 2)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.adjust_saturation(img,0.5)</span></span><br><span class="line">        <span class="comment">#img = tf.image.random_saturation(img,-0.5,0.5)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.adjust_hue(img, 0.3)</span></span><br><span class="line">        <span class="comment">#img = tf.image.random_hue(img, 10)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 标准化</span></span><br><span class="line">        img = tf.image.per_image_standardization(img)</span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.random_flip_up_down(img)</span></span><br><span class="line">        img_ = img.eval()  <span class="comment"># 必须在会话中才能eval取值</span></span><br><span class="line"></span><br><span class="line">        print(img_.shape)</span><br><span class="line">        print(img_.dtype)</span><br><span class="line">        <span class="comment">#print(img_)</span></span><br><span class="line">    plt.imshow(img_)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">readImg_3()</span><br></pre></td></tr></table></figure>
-
 
           
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>SQL常用语句、关键字，子查询，多表查询，连接查询等。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/20/mysql-4-查询练习/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1228,7 +1275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/26/文学摘抄-非暴力沟通-1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/05/mysql-2-约束/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="史晨辉">
@@ -1247,7 +1294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/08/26/文学摘抄-非暴力沟通-1/" itemprop="url">随笔</a></h1>
+                <a class="post-title-link" href="/2020/03/05/mysql-2-约束/" itemprop="url">MySQL中的约束</a></h1>
         
 
         <div class="post-meta">
@@ -1259,8 +1306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-26T21:52:13+08:00">
-                2019-08-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-05T00:00:00+08:00">
+                2020-03-05
               </time>
             
 
@@ -1298,134 +1345,17 @@
 
       
         
-          
-            <p>你取之于我，<br>是我得到最好的礼物，<br>当你知道我因施于你<br>而快乐。</p>
-<p>你明白，我的给与不是<br>让你欠我人情，<br>而是因为我想活出<br>对你的爱。</p>
-<p>欣然地接受，<br>或许是最佳的赏赐。<br>我无法将二者<br>分开。</p>
-<p>当你施于我，<br>我给你我的接纳。<br>当你取之于我，<br>我感激你的赐予。</p>
-<pre><code>———— 1978《获赠》</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/29/注册表监控/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="史晨辉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/head.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="史晨辉的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/29/注册表监控/" itemprop="url">软件的一些设置对注册表的影响</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-29T22:04:51+08:00">
-                2019-05-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>对于windows系统，注册表保存着大量的设置信息，有系统本身的配置，也有其他软件的一些配置。软件的配置要么写入注册表，要么存入一个配置文件。</p>
-<p>这里用注册表监控软件Regshot看一下修改一些软件的设置后注册表有哪些变化。</p>
+          <ul>
+<li>主键约束</li>
+<li>自增约束</li>
+<li>唯一约束</li>
+<li>非空约束</li>
+<li>默认约束</li>
+<li>外键约束</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/05/29/注册表监控/#more" rel="contents">
+            <a class="btn" href="/2020/03/05/mysql-2-约束/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1476,7 +1406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/26/img-test/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/02/mysql-3-三大范式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="史晨辉">
@@ -1495,7 +1425,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/05/26/img-test/" itemprop="url">图片插入测试</a></h1>
+                <a class="post-title-link" href="/2020/03/02/mysql-3-三大范式/" itemprop="url">数据库设计三大范式</a></h1>
         
 
         <div class="post-meta">
@@ -1507,8 +1437,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-26T23:46:15+08:00">
-                2019-05-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-02T00:00:00+08:00">
+                2020-03-02
               </time>
             
 
@@ -1547,16 +1477,24 @@
       
         
           
-            <p>文章里很多需要插入图片，一般都是写文章时现场截的图，文章里图片插入要提供图片url，但是本地的图片要上传到网上才有地址，很不方便。</p>
-<p>搜了一下，hexo有上传本地图片的方法。</p>
-<ol>
-<li>把博客配置文件_config.yml修改一个地方：post_asset_folder:true</li>
-<li>安装插件：npm install hexo-asset-image –save</li>
-</ol>
-<p>然后新建文章hexo new “img-test”，会在文章md文件目录下新建”img-test.md”和”img-test”文件夹，可以将图片放在文件夹里，引用时地址填：img-test/图片名.jpg</p>
-<p>文章上传到git上后图片就有了，这个方法引用时也非常方便，很好用呢！</p>
-<p>参考链接：<a href="https://www.jianshu.com/p/a2786cdb06e1" target="_blank" rel="noopener">https://www.jianshu.com/p/a2786cdb06e1</a></p>
-<p><img src="/2019/05/26/img-test/me.jpg" alt="1st-img"></p>
+            <h1 id="数据库的三大设计范式"><a href="#数据库的三大设计范式" class="headerlink" title="数据库的三大设计范式"></a>数据库的三大设计范式</h1><h2 id="1NF"><a href="#1NF" class="headerlink" title="1NF"></a>1NF</h2><p><strong>字段需要是最小的单元，如果字段还可以继续拆分，就不满足第一范式。</strong></p>
+<p>比如创建地址字段，填成“中国河南省郑州市中原区”，这样就可以继续划分成“国家”、“省份”，“市区” 字段，所以就不满足第一范式。</p>
+<p>范式设计得越详细，对某些实际操作可能会更好，但并非都有好处，需要对项目的实际情况进行设定。</p>
+<h2 id="2NF"><a href="#2NF" class="headerlink" title="2NF"></a>2NF</h2><p><strong>在满足第一范式的前提下，其他列都必须完全依赖于主键列。</strong>如果出现不完全依赖，只可能发生在联合主键的情况下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 订单表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> myorder (</span><br><span class="line">    product_id <span class="built_in">INT</span>,</span><br><span class="line">    customer_id <span class="built_in">INT</span>,</span><br><span class="line">    product_name <span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">    customer_name <span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (product_id, customer_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>这张订单表中，product_name只依赖 product_id ，而customer_name 只依赖 customer_id。</p>
+<p>所以这张表就不满足第二范式：其他列必须完全依赖主键列。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> myorder (</span><br><span class="line">    order_id <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">    product_id <span class="built_in">INT</span>,</span><br><span class="line">    customer_id <span class="built_in">INT</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> product (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> customer (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>拆分后，就可以满足第二范式。</p>
+<h2 id="3NF"><a href="#3NF" class="headerlink" title="3NF"></a>3NF</h2><p><strong>在满足第二范式的前提下，除了主键列之外，其他列之间不能有传递依赖关系。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> myorder (</span><br><span class="line">    order_id <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">    product_id <span class="built_in">INT</span>,</span><br><span class="line">    customer_id <span class="built_in">INT</span>,</span><br><span class="line">    customer_phone <span class="built_in">VARCHAR</span>(<span class="number">15</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>表中 customer_phone 有可能依赖 order_id 和customer_id 两个列，也就不满足第三范式的要求，其他列之间不能有传递依赖关系。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> myorder (</span><br><span class="line">    order_id <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">    product_id <span class="built_in">INT</span>,</span><br><span class="line">    customer_id <span class="built_in">INT</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> customer (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">    phone <span class="built_in">VARCHAR</span>(<span class="number">15</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>修改后就不存在其他列之间的传递依赖关系，其他列都只依赖于主键列，满足了第三范式的设计！</p>
 
           
         
@@ -1605,7 +1543,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/26/公式测试/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/01/mysql-1-基本操作/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="史晨辉">
@@ -1624,7 +1562,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/05/26/公式测试/" itemprop="url">公式测试</a></h1>
+                <a class="post-title-link" href="/2020/03/01/mysql-1-基本操作/" itemprop="url">MySQL基本操作</a></h1>
         
 
         <div class="post-meta">
@@ -1636,8 +1574,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-26T11:51:48+08:00">
-                2019-05-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-01T00:00:00+08:00">
+                2020-03-01
               </time>
             
 
@@ -1676,21 +1614,45 @@
       
         
           
-            <p>hexo修改一下渲染器是可以支持数学公式的，常见的LaTeX公式语法网上都有</p>
-<p>$ 可以让公式靠左显示</p>
-<p>$$ 是让公式占一行居中显示</p>
-<p>$T(n) = \Theta(n)$</p>
-<h2 id="几个常见的在x-0处展开的带佩亚诺余项的泰勒公式："><a href="#几个常见的在x-0处展开的带佩亚诺余项的泰勒公式：" class="headerlink" title="几个常见的在x=0处展开的带佩亚诺余项的泰勒公式："></a>几个常见的在x=0处展开的带佩亚诺余项的泰勒公式：</h2><p>$e^x = 1+x+\frac{1}{2!}x^2+…+\frac{1}{n!}x^n+o(x^n)$</p>
-<p>$sin(x) = x-\frac{1}{3!}x^3+…+\frac{(-1)^n}{(2n+1)!}x^{2n+1}+o(x^{2n+2})$</p>
-<p>$$cos(x) = 1-\frac{1}{2!}x^2 + … + \frac{(-1)^n}{(2n)!}x^{(2n)} + o(x^{2n+1})$$</p>
-<p>$$ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - … + (-1)^{n-1}\frac{x^n}{n} + o(x^n)$$</p>
-<p>$$(1+x)^m = 1+mx + \frac{m(m-1)}{2!}x^3 + … + \frac{m(m-1)…(m-n+1)}{n!}x^n + o(x^n)$$</p>
-<p>上面几个公式的写法如下：</p>
-<p>e^x = 1+x+\frac{1}{2!}x^2+…+\frac{1}{n!}x^n+o(x^n)</p>
-<p>sin(x) = x-\frac{1}{3!}x^3+…+\frac{(-1)^n}{(2n+1)!}x^{2n+1}+o(x^{2n+2})</p>
-<p>cos(x) = 1-\frac{1}{2!}x^2 + … + \frac{(-1)^n}{(2n)!}x^{(2n)} + o(x^{2n+1})</p>
-<p>ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - … + (-1)^{n-1}\frac{x^n}{n} + o(x^n)</p>
-<p>(1+x)^m = 1+mx + \frac{m(m-1)}{2!}x^3 + … + \frac{m(m-1)…(m-n+1)}{n!}x^n + o(x^n)</p>
+            <h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><ul>
+<li><p>登录</p>
+</li>
+<li><p>退出</p>
+</li>
+<li><p>显示所有数据库<br>show tables;</p>
+</li>
+<li><p>创建数据库<br>create database test;</p>
+</li>
+<li><p>切换数据库<br>use test;</p>
+</li>
+<li><p>显示数据库中所有表<br>show tables;</p>
+</li>
+<li><p>创建表<br>create table pet(</p>
+<p>​    name VARCHAR(20),</p>
+<p>​    owner VARCHAR(20),</p>
+<p>​    species VARCHAR(20),</p>
+<p>​    sex CHAR(1),</p>
+<p>​    birth DATE,</p>
+<p>​    death DATE</p>
+<p>);</p>
+</li>
+<li><p>查看表结构（describe pet）<br>desc pet;</p>
+</li>
+<li><p>查询表<br>select * from pet;</p>
+</li>
+<li><p>插入数据<br>INSERT INTO pet<br>VALUES (‘puffball’, ‘Diane’, ‘hamster’, ‘f’, ‘1990-03-30’, NULL);<br>注：日期类型也需要是字符串，不加单引号会报错</p>
+</li>
+<li><p>删除数据<br>delete from pet where name = ‘Floue’ ;</p>
+</li>
+<li><p>修改数据<br>update pet set name = ‘Flue’ where owner=’周星驰’ ;</p>
+</li>
+<li><p>​</p>
+</li>
+</ul>
+<h1 id="常用数据类型"><a href="#常用数据类型" class="headerlink" title="常用数据类型"></a>常用数据类型</h1><p>大致分为3类，数值、日期/时间、字符(串)。不需费时间记，用的时候查也可。</p>
+<p>数值：不同数值类型存放的<strong>数值范围</strong>不同，占用大小也不同</p>
+<p>日期/时间：不同类型的范围和<strong>格式</strong>不同。</p>
+<p>字符串：不同类型的<strong>字符串长度</strong>不同</p>
 
           
         
@@ -1778,7 +1740,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1800,7 +1762,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

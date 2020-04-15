@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/3-180x185.png.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/3-32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/3-16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SQL,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SQL常用语句、关键字，子查询，多表查询，连接查询等。">
+<meta name="keywords" content="SQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL常用查询语句">
+<meta property="og:url" content="http://yoursite.com/2020/03/20/mysql-4-查询练习/index.html">
+<meta property="og:site_name" content="史晨辉的博客">
+<meta property="og:description" content="SQL常用语句、关键字，子查询，多表查询，连接查询等。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-15T12:02:16.840Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL常用查询语句">
+<meta name="twitter:description" content="SQL常用语句、关键字，子查询，多表查询，连接查询等。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/20/mysql-4-查询练习/">
+
+
+
+
+
+  <title>SQL常用查询语句 | 史晨辉的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">史晨辉的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/20/mysql-4-查询练习/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SQL常用查询语句</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-20T00:00:00+08:00">
+                2020-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>SQL常用语句、关键字，子查询，多表查询，连接查询等。</p>
+<a id="more"></a>
+
+<h1 id="常用语句、关键字"><a href="#常用语句、关键字" class="headerlink" title="常用语句、关键字"></a>常用语句、关键字</h1><h2 id="1-select-…-from-…-where-；"><a href="#1-select-…-from-…-where-；" class="headerlink" title="1. select … from … where ；"></a>1. select … from … where ；</h2><h2 id="2-AND-OR"><a href="#2-AND-OR" class="headerlink" title="2. AND / OR"></a>2. AND / OR</h2><h2 id="3-IN-NOT-IN"><a href="#3-IN-NOT-IN" class="headerlink" title="3. IN / NOT IN"></a>3. IN / NOT IN</h2><h2 id="4-YEAR-函数"><a href="#4-YEAR-函数" class="headerlink" title="4. YEAR()函数"></a>4. YEAR()函数</h2><p>获取日期格式数据的年份</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> birthday <span class="keyword">FROM</span> student <span class="keyword">WHERE</span> <span class="keyword">no</span> <span class="keyword">IN</span> (<span class="number">101</span>, <span class="number">108</span>);</span><br><span class="line">+<span class="comment">------------+</span></span><br><span class="line">| birthday   |</span><br><span class="line">+<span class="comment">------------+</span></span><br><span class="line">| 1977-09-01 |</span><br><span class="line">| 1975-02-10 |</span><br><span class="line">+<span class="comment">------------+</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">YEAR</span>(birthday) <span class="keyword">FROM</span> student <span class="keyword">WHERE</span> <span class="keyword">no</span> <span class="keyword">IN</span> (<span class="number">101</span>, <span class="number">108</span>);</span><br><span class="line">+<span class="comment">----------------+</span></span><br><span class="line">| YEAR(birthday) |</span><br><span class="line">+<span class="comment">----------------+</span></span><br><span class="line">|           1977 |</span><br><span class="line">|           1975 |</span><br><span class="line">+<span class="comment">----------------+</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-UNION-合并两个表"><a href="#5-UNION-合并两个表" class="headerlink" title="5. UNION 合并两个表"></a>5. UNION 合并两个表</h2><p>将两次查询的结果合并在一个表中显示。</p>
+<p><strong>查询 计算机系 与 电子工程系 中的不同职称的教师。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- NOT: 代表逻辑非</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> teacher <span class="keyword">WHERE</span> department = <span class="string">'计算机系'</span> <span class="keyword">AND</span> profession <span class="keyword">NOT</span> <span class="keyword">IN</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> profession <span class="keyword">FROM</span> teacher <span class="keyword">WHERE</span> department = <span class="string">'电子工程系'</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 合并两个集</span></span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> teacher <span class="keyword">WHERE</span> department = <span class="string">'电子工程系'</span> <span class="keyword">AND</span> profession <span class="keyword">NOT</span> <span class="keyword">IN</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> profession <span class="keyword">FROM</span> teacher <span class="keyword">WHERE</span> department = <span class="string">'计算机系'</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-ANY-ALL"><a href="#6-ANY-ALL" class="headerlink" title="6. ANY / ALL"></a>6. ANY / ALL</h2><p>ANY 表示集合中任意一个，ALL表示集合中所有的。</p>
+<p>degree &gt; ANY (76, 46, 95)  表示degree &gt; 46 即成立。</p>
+<h2 id="7-ORDER-BY-…-DESC-降序排序"><a href="#7-ORDER-BY-…-DESC-降序排序" class="headerlink" title="7. ORDER BY … DESC 降序排序"></a>7. ORDER BY … DESC 降序排序</h2><p>在查询语句后加上order by 某字段，会将查询的结果按这个字段的大小排序。</p>
+<p>DESC 降序；ASC 升序；</p>
+<p>可以同时按多个列排序：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c_no, degree <span class="keyword">FROM</span> score <span class="keyword">order</span> <span class="keyword">by</span> c_no,degree <span class="keyword">desc</span>;</span><br><span class="line">+<span class="comment">-------+--------+</span></span><br><span class="line">| c_no  | degree |</span><br><span class="line">+<span class="comment">-------+--------+</span></span><br><span class="line">| 3-105 |     92 |</span><br><span class="line">| 3-105 |     88 |</span><br><span class="line">| 3-105 |     76 |</span><br><span class="line">| 3-245 |     86 |</span><br><span class="line">| 3-245 |     75 |</span><br><span class="line">| 3-245 |     68 |</span><br><span class="line">| 6-166 |     85 |</span><br><span class="line">| 6-166 |     81 |</span><br><span class="line">| 6-166 |     79 |</span><br><span class="line">+<span class="comment">-------+--------+</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-AVG-计算某列的平均值，常与GROUP-BY-搭配使用"><a href="#8-AVG-计算某列的平均值，常与GROUP-BY-搭配使用" class="headerlink" title="8. AVG() 计算某列的平均值，常与GROUP BY 搭配使用"></a>8. AVG() 计算某列的平均值，常与GROUP BY 搭配使用</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c_no, <span class="keyword">AVG</span>(degree) <span class="keyword">FROM</span> score <span class="keyword">GROUP</span> <span class="keyword">BY</span> c_no;</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-COUNT"><a href="#9-COUNT" class="headerlink" title="9. COUNT()"></a>9. COUNT()</h2><h2 id="10-HAVING"><a href="#10-HAVING" class="headerlink" title="10. HAVING"></a>10. HAVING</h2><p>HAVING: 表示持有，与where用法类似。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> student <span class="keyword">where</span>  sex=<span class="string">'男'</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> student <span class="keyword">having</span> sex=<span class="string">'男'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>HAVING COUNT(c_no) &gt;= 2。</p>
+<h2 id="11-SELECT-…-FROM-…-GROUP-BY-…-HAVING-COUNT-gt-n"><a href="#11-SELECT-…-FROM-…-GROUP-BY-…-HAVING-COUNT-gt-n" class="headerlink" title="11. SELECT … FROM … GROUP BY … HAVING COUNT(..)&gt;=n;"></a>11. SELECT … FROM … GROUP BY … HAVING COUNT(..)&gt;=n;</h2><h2 id="12-NOT-取反"><a href="#12-NOT-取反" class="headerlink" title="12. NOT 取反"></a>12. NOT 取反</h2><h2 id="13-LIKE-模糊查询"><a href="#13-LIKE-模糊查询" class="headerlink" title="13. LIKE 模糊查询"></a>13. LIKE 模糊查询</h2><p><strong>查询 student 表中不姓 “王” 的同学记录。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- NOT: 取反</span></span><br><span class="line"><span class="comment">-- LIKE: 模糊查询</span></span><br><span class="line">mysql&gt; SELECT * FROM student WHERE name NOT LIKE '王%';</span><br><span class="line">+<span class="comment">-----+-----------+-----+------------+-------+</span></span><br><span class="line">| no  | name      | sex | birthday   | class |</span><br><span class="line">+<span class="comment">-----+-----------+-----+------------+-------+</span></span><br><span class="line">| 101 | 曾华      | 男  | 1977-09-01 | 95033 |</span><br><span class="line">| 102 | 匡明      | 男  | 1975-10-02 | 95031 |</span><br><span class="line">| 104 | 李军      | 男  | 1976-02-20 | 95033 |</span><br><span class="line">| 106 | 陆军      | 男  | 1974-06-03 | 95031 |</span><br><span class="line">| 108 | 张全蛋    | 男  | 1975-02-10 | 95031 |</span><br><span class="line">| 109 | 赵铁柱    | 男  | 1974-06-03 | 95031 |</span><br><span class="line">| 110 | 张飞      | 男  | 1974-06-03 | 95038 |</span><br><span class="line">+<span class="comment">-----+-----------+-----+------------+-------+</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="14-MAX、MIN"><a href="#14-MAX、MIN" class="headerlink" title="14. MAX、MIN"></a>14. MAX、MIN</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(birthday), <span class="keyword">MIN</span>(birthday) <span class="keyword">FROM</span> student;</span><br></pre></td></tr></table></figure>
+
+<h1 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h1><h2 id="1-别名"><a href="#1-别名" class="headerlink" title="1. 别名"></a>1. 别名</h2><ol>
+<li><p>as </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 使用函数 YEAR(NOW()) 计算出当前年份，减去出生年份后得出年龄。</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>, <span class="keyword">YEAR</span>(<span class="keyword">NOW</span>()) - <span class="keyword">YEAR</span>(birthday) <span class="keyword">as</span> age <span class="keyword">FROM</span> student;</span><br><span class="line">+<span class="comment">-----------+------+</span></span><br><span class="line">| name      | age  |</span><br><span class="line">+<span class="comment">-----------+------+</span></span><br><span class="line">| 曾华      |   42 |</span><br><span class="line">| 匡明      |   44 |</span><br><span class="line">| 王丽      |   43 |</span><br><span class="line">| 李军      |   43 |</span><br><span class="line">| 王芳      |   44 |</span><br><span class="line">| 陆军      |   45 |</span><br><span class="line">| 王尼玛    |   43 |</span><br><span class="line">| 张全蛋    |   44 |</span><br><span class="line">| 赵铁柱    |   45 |</span><br><span class="line">| 张飞      |   45 |</span><br><span class="line">+<span class="comment">-----------+------+</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同一张表联合查询时</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> score a <span class="keyword">WHERE</span> degree &lt; (</span><br><span class="line">  <span class="keyword">SELECT</span> <span class="keyword">AVG</span>(degree) <span class="keyword">FROM</span> score b <span class="keyword">WHERE</span> a.c_no = b.c_no);</span><br></pre></td></tr></table></figure>
+
+<p>​</p>
+</li>
+</ol>
+<h1 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h1><p>子查询是比较复杂的查询，通常有多个条件，需要先查询一次，然后在第一次的查询结果中再次查询。</p>
+<h2 id="1-查询-“男”-教师及其所上的课程。"><a href="#1-查询-“男”-教师及其所上的课程。" class="headerlink" title="1. 查询 “男” 教师及其所上的课程。"></a>1. <strong>查询 “男” 教师及其所上的课程。</strong></h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> course <span class="keyword">WHERE</span> t_no <span class="keyword">in</span> (<span class="keyword">SELECT</span> <span class="keyword">no</span> <span class="keyword">FROM</span> teacher <span class="keyword">WHERE</span> sex = <span class="string">'男'</span>);</span><br><span class="line">+<span class="comment">-------+--------------+------+</span></span><br><span class="line">| no    | name         | t_no |</span><br><span class="line">+<span class="comment">-------+--------------+------+</span></span><br><span class="line">| 3-245 | 操作系统     | 804  |</span><br><span class="line">| 6-166 | 数字电路     | 856  |</span><br><span class="line">+<span class="comment">-------+--------------+------+</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-查询最高分同学的-score-表。"><a href="#2-查询最高分同学的-score-表。" class="headerlink" title="2. 查询最高分同学的 score 表。"></a>2. <strong>查询最高分同学的 score 表。</strong></h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 找出最高成绩（该查询只能有一个结果）</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(degree) <span class="keyword">FROM</span> score;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 根据上面的条件筛选出所有最高成绩表，</span></span><br><span class="line"><span class="comment">-- 该查询可能有多个结果，假设 degree 值多次符合条件。</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> score <span class="keyword">WHERE</span> degree = (<span class="keyword">SELECT</span> <span class="keyword">MAX</span>(degree) <span class="keyword">FROM</span> score);</span><br><span class="line">+<span class="comment">------+-------+--------+</span></span><br><span class="line">| s_no | c_no  | degree |</span><br><span class="line">+<span class="comment">------+-------+--------+</span></span><br><span class="line">| 103  | 3-105 |     92 |</span><br><span class="line">+<span class="comment">------+-------+--------+</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-查询和-“李军”-同性别且同班的同学-name-。"><a href="#3-查询和-“李军”-同性别且同班的同学-name-。" class="headerlink" title="3. 查询和 “李军” 同性别且同班的同学 name 。"></a>3. <strong>查询和 “李军” 同性别且同班的同学 name 。</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">SELECT name, sex, class FROM student WHERE sex = (</span><br><span class="line">    SELECT sex FROM student WHERE name = &apos;李军&apos;</span><br><span class="line">) AND class = (</span><br><span class="line">    SELECT class FROM student WHERE name = &apos;李军&apos;</span><br><span class="line">);</span><br><span class="line">+-----------+-----+-------+</span><br><span class="line">| name      | sex | class |</span><br><span class="line">+-----------+-----+-------+</span><br><span class="line">| 曾华      | 男  | 95033 |</span><br><span class="line">| 李军      | 男  | 95033 |</span><br><span class="line">| 王尼玛    | 男  | 95033 |</span><br><span class="line">+-----------+-----+-------+</span><br></pre></td></tr></table></figure>
+
+<h1 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h1><p>from两个表时，会先将这两个表全连接。</p>
+<h1 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h1><p>准备用于测试连接查询的数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> testJoin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> person (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">    cardId <span class="built_in">INT</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> card (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> card <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'饭卡'</span>), (<span class="number">2</span>, <span class="string">'建行卡'</span>), (<span class="number">3</span>, <span class="string">'农行卡'</span>), (<span class="number">4</span>, <span class="string">'工商卡'</span>), (<span class="number">5</span>, <span class="string">'邮政卡'</span>);</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> card;</span><br><span class="line">+<span class="comment">------+-----------+</span></span><br><span class="line">| id   | name      |</span><br><span class="line">+<span class="comment">------+-----------+</span></span><br><span class="line">|    1 | 饭卡      |</span><br><span class="line">|    2 | 建行卡    |</span><br><span class="line">|    3 | 农行卡    |</span><br><span class="line">|    4 | 工商卡    |</span><br><span class="line">|    5 | 邮政卡    |</span><br><span class="line">+<span class="comment">------+-----------+</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> person <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'张三'</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="string">'李四'</span>, <span class="number">3</span>), (<span class="number">3</span>, <span class="string">'王五'</span>, <span class="number">6</span>);</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> person;</span><br><span class="line">+<span class="comment">------+--------+--------+</span></span><br><span class="line">| id   | name   | cardId |</span><br><span class="line">+<span class="comment">------+--------+--------+</span></span><br><span class="line">|    1 | 张三   |      1 |</span><br><span class="line">|    2 | 李四   |      3 |</span><br><span class="line">|    3 | 王五   |      6 |</span><br><span class="line">+<span class="comment">------+--------+--------+</span></span><br></pre></td></tr></table></figure>
+
+<p>分析两张表发现，<code>person</code> 表并没有为 <code>cardId</code> 字段设置一个在 <code>card</code> 表中对应的 <code>id</code> 外键。如果设置了的话，<code>person</code> 中 <code>cardId</code> 字段值为 <code>6</code> 的行就插不进去，因为该 <code>cardId</code> 值在 <code>card</code> 表中并没有。</p>
+<h4 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h4><p>要查询这两张表中有关系的数据，可以使用 <code>INNER JOIN</code> ( 内连接 ) 将它们连接在一起。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INNER JOIN: 表示为内连接，将两张表拼接在一起。</span></span><br><span class="line"><span class="comment">-- on: 表示要执行某个条件。</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> person <span class="keyword">INNER</span> <span class="keyword">JOIN</span> card <span class="keyword">on</span> person.cardId = card.id;</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br><span class="line">| id   | name   | cardId | id   | name      |</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br><span class="line">|    1 | 张三   |      1 |    1 | 饭卡      |</span><br><span class="line">|    2 | 李四   |      3 |    3 | 农行卡    |</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 将 INNER 关键字省略掉，结果也是一样的。</span></span><br><span class="line"><span class="comment">-- SELECT * FROM person JOIN card on person.cardId = card.id;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：<code>card</code> 的整张表被连接到了右边。</p>
+</blockquote>
+<h4 id="左外连接"><a href="#左外连接" class="headerlink" title="左外连接"></a>左外连接</h4><p>完整显示左边的表 ( <code>person</code> ) ，右边的表如果符合条件就显示，不符合则补 <code>NULL</code> 。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- LEFT JOIN 也叫做 LEFT OUTER JOIN，用这两种方式的查询结果是一样的。</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> person <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> card <span class="keyword">on</span> person.cardId = card.id;</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br><span class="line">| id   | name   | cardId | id   | name      |</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br><span class="line">|    1 | 张三   |      1 |    1 | 饭卡      |</span><br><span class="line">|    2 | 李四   |      3 |    3 | 农行卡    |</span><br><span class="line">|    3 | 王五   |      6 | NULL | NULL      |</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="右外链接"><a href="#右外链接" class="headerlink" title="右外链接"></a>右外链接</h4><p>完整显示右边的表 ( <code>card</code> ) ，左边的表如果符合条件就显示，不符合则补 <code>NULL</code> 。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> person <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> card <span class="keyword">on</span> person.cardId = card.id;</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br><span class="line">| id   | name   | cardId | id   | name      |</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br><span class="line">|    1 | 张三   |      1 |    1 | 饭卡      |</span><br><span class="line">|    2 | 李四   |      3 |    3 | 农行卡    |</span><br><span class="line">| NULL | NULL   |   NULL |    2 | 建行卡    |</span><br><span class="line">| NULL | NULL   |   NULL |    4 | 工商卡    |</span><br><span class="line">| NULL | NULL   |   NULL |    5 | 邮政卡    |</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="全外链接"><a href="#全外链接" class="headerlink" title="全外链接"></a>全外链接</h4><p>完整显示两张表的全部数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- MySQL 不支持这种语法的全外连接</span></span><br><span class="line"><span class="comment">-- SELECT * FROM person FULL JOIN card on person.cardId = card.id;</span></span><br><span class="line"><span class="comment">-- 出现错误：</span></span><br><span class="line"><span class="comment">-- ERROR 1054 (42S22): Unknown column 'person.cardId' in 'on clause'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- MySQL全连接语法，使用 UNION 将两张表合并在一起。</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> person <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> card <span class="keyword">on</span> person.cardId = card.id</span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> person <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> card <span class="keyword">on</span> person.cardId = card.id;</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br><span class="line">| id   | name   | cardId | id   | name      |</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br><span class="line">|    1 | 张三   |      1 |    1 | 饭卡      |</span><br><span class="line">|    2 | 李四   |      3 |    3 | 农行卡    |</span><br><span class="line">|    3 | 王五   |      6 | NULL | NULL      |</span><br><span class="line">| NULL | NULL   |   NULL |    2 | 建行卡    |</span><br><span class="line">| NULL | NULL   |   NULL |    4 | 工商卡    |</span><br><span class="line">| NULL | NULL   |   NULL |    5 | 邮政卡    |</span><br><span class="line">+<span class="comment">------+--------+--------+------+-----------+</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="复杂查询例子"><a href="#复杂查询例子" class="headerlink" title="复杂查询例子"></a>复杂查询例子</h1><p><strong>1.查询某课程成绩比该课程平均成绩低的 score 表。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 将表 b 作用于表 a 中查询数据</span></span><br><span class="line"><span class="comment">-- score a (b): 将表声明为 a (b)，</span></span><br><span class="line"><span class="comment">-- 如此就能用 a.c_no = b.c_no 作为条件执行查询了。</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> score a <span class="keyword">WHERE</span> degree &lt; (</span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="keyword">AVG</span>(degree) <span class="keyword">FROM</span> score b <span class="keyword">WHERE</span> a.c_no = b.c_no)</span><br><span class="line">);</span><br><span class="line">+<span class="comment">------+-------+--------+</span></span><br><span class="line">| s_no | c_no  | degree |</span><br><span class="line">+<span class="comment">------+-------+--------+</span></span><br><span class="line">| 105  | 3-245 |     75 |</span><br><span class="line">| 105  | 6-166 |     79 |</span><br><span class="line">| 109  | 3-105 |     76 |</span><br><span class="line">| 109  | 3-245 |     68 |</span><br><span class="line">| 109  | 6-166 |     81 |</span><br><span class="line">+<span class="comment">------+-------+--------+</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 查询所有任课 ( 在 course 表里有课程 ) 教师的 name 和 department</strong> 。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>, department <span class="keyword">FROM</span> teacher <span class="keyword">WHERE</span> <span class="keyword">no</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> t_no <span class="keyword">FROM</span> course);</span><br><span class="line">+<span class="comment">--------+-----------------+</span></span><br><span class="line">| name   | department      |</span><br><span class="line">+<span class="comment">--------+-----------------+</span></span><br><span class="line">| 李诚   | 计算机系        |</span><br><span class="line">| 王萍   | 计算机系        |</span><br><span class="line">| 刘冰   | 电子工程系      |</span><br><span class="line">| 张旭   | 电子工程系      |</span><br><span class="line">+<span class="comment">--------+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 查询 score 表中至少有 2 名学生选修，并以 3 开头的课程的平均分数。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c_no, <span class="keyword">AVG</span>(degree), <span class="keyword">COUNT</span>(*) <span class="keyword">FROM</span> score <span class="keyword">GROUP</span> <span class="keyword">BY</span> c_no</span><br><span class="line"><span class="keyword">HAVING</span> <span class="keyword">COUNT</span>(c_no) &gt;= <span class="number">2</span> <span class="keyword">AND</span> c_no <span class="keyword">LIKE</span> <span class="string">'3%'</span>;</span><br><span class="line">+<span class="comment">-------+-------------+----------+</span></span><br><span class="line">| c_no  | AVG(degree) | COUNT(*) |</span><br><span class="line">+<span class="comment">-------+-------------+----------+</span></span><br><span class="line">| 3-105 |     85.3333 |        3 |</span><br><span class="line">| 3-245 |     76.3333 |        3 |</span><br><span class="line">+<span class="comment">-------+-------------+----------+</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>4. 查询 student 表中至少有 2 名男生的 class 。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看学生表信息</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> student;</span><br><span class="line">+<span class="comment">-----+-----------+-----+------------+-------+</span></span><br><span class="line">| no  | name      | sex | birthday   | class |</span><br><span class="line">+<span class="comment">-----+-----------+-----+------------+-------+</span></span><br><span class="line">| 101 | 曾华      | 男  | 1977-09-01 | 95033 |</span><br><span class="line">| 102 | 匡明      | 男  | 1975-10-02 | 95031 |</span><br><span class="line">| 103 | 王丽      | 女  | 1976-01-23 | 95033 |</span><br><span class="line">| 104 | 李军      | 男  | 1976-02-20 | 95033 |</span><br><span class="line">| 105 | 王芳      | 女  | 1975-02-10 | 95031 |</span><br><span class="line">| 106 | 陆军      | 男  | 1974-06-03 | 95031 |</span><br><span class="line">| 107 | 王尼玛    | 男  | 1976-02-20 | 95033 |</span><br><span class="line">| 108 | 张全蛋    | 男  | 1975-02-10 | 95031 |</span><br><span class="line">| 109 | 赵铁柱    | 男  | 1974-06-03 | 95031 |</span><br><span class="line">| 110 | 张飞      | 男  | 1974-06-03 | 95038 |</span><br><span class="line">+<span class="comment">-----+-----------+-----+------------+-------+</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 只查询性别为男，然后按 class 分组，并限制 class 行大于 1。</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">class</span> <span class="keyword">FROM</span> student <span class="keyword">WHERE</span> sex = <span class="string">'男'</span> <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">class</span> <span class="keyword">HAVING</span> <span class="keyword">COUNT</span>(*) &gt; <span class="number">1</span>;</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">| class |</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">| 95033 |</span><br><span class="line">| 95031 |</span><br><span class="line">+<span class="comment">-------+</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>5. 查询所有选修 “计算机导论” 课程的 “男” 同学成绩表。</strong></p>
+<p>需要的 “计算机导论” 和性别为 “男” 的编号可以在 <code>course</code> 和 <code>student</code> 表中找到。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM score WHERE c_no = (</span><br><span class="line">    SELECT no FROM course WHERE name = &apos;计算机导论&apos;</span><br><span class="line">) AND s_no IN (</span><br><span class="line">    SELECT no FROM student WHERE sex = &apos;男&apos;</span><br><span class="line">);</span><br><span class="line">+------+-------+--------+</span><br><span class="line">| s_no | c_no  | degree |</span><br><span class="line">+------+-------+--------+</span><br><span class="line">| 101  | 3-105 |     90 |</span><br><span class="line">| 102  | 3-105 |     91 |</span><br><span class="line">| 104  | 3-105 |     89 |</span><br><span class="line">| 109  | 3-105 |     76 |</span><br><span class="line">+------+-------+--------+</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SQL/" rel="tag"># SQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/15/C++变量、限定符/" rel="next" title="C++变量、限定符">
+                <i class="fa fa-chevron-left"></i> C++变量、限定符
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/03/图像增强/" rel="prev" title="TensorFlow 图像增强--随机翻转、随机亮度、对比度、色相等">
+                TensorFlow 图像增强--随机翻转、随机亮度、对比度、色相等 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/head.png" alt="史晨辉">
+            
+              <p class="site-author-name" itemprop="name">史晨辉</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用语句、关键字"><span class="nav-number">1.</span> <span class="nav-text">常用语句、关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-select-…-from-…-where-；"><span class="nav-number">1.1.</span> <span class="nav-text">1. select … from … where ；</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-AND-OR"><span class="nav-number">1.2.</span> <span class="nav-text">2. AND / OR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-IN-NOT-IN"><span class="nav-number">1.3.</span> <span class="nav-text">3. IN / NOT IN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-YEAR-函数"><span class="nav-number">1.4.</span> <span class="nav-text">4. YEAR()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-UNION-合并两个表"><span class="nav-number">1.5.</span> <span class="nav-text">5. UNION 合并两个表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-ANY-ALL"><span class="nav-number">1.6.</span> <span class="nav-text">6. ANY / ALL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-ORDER-BY-…-DESC-降序排序"><span class="nav-number">1.7.</span> <span class="nav-text">7. ORDER BY … DESC 降序排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-AVG-计算某列的平均值，常与GROUP-BY-搭配使用"><span class="nav-number">1.8.</span> <span class="nav-text">8. AVG() 计算某列的平均值，常与GROUP BY 搭配使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-COUNT"><span class="nav-number">1.9.</span> <span class="nav-text">9. COUNT()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-HAVING"><span class="nav-number">1.10.</span> <span class="nav-text">10. HAVING</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-SELECT-…-FROM-…-GROUP-BY-…-HAVING-COUNT-gt-n"><span class="nav-number">1.11.</span> <span class="nav-text">11. SELECT … FROM … GROUP BY … HAVING COUNT(..)&gt;=n;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-NOT-取反"><span class="nav-number">1.12.</span> <span class="nav-text">12. NOT 取反</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-LIKE-模糊查询"><span class="nav-number">1.13.</span> <span class="nav-text">13. LIKE 模糊查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-MAX、MIN"><span class="nav-number">1.14.</span> <span class="nav-text">14. MAX、MIN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些概念"><span class="nav-number">2.</span> <span class="nav-text">一些概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-别名"><span class="nav-number">2.1.</span> <span class="nav-text">1. 别名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#子查询"><span class="nav-number">3.</span> <span class="nav-text">子查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-查询-“男”-教师及其所上的课程。"><span class="nav-number">3.1.</span> <span class="nav-text">1. 查询 “男” 教师及其所上的课程。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-查询最高分同学的-score-表。"><span class="nav-number">3.2.</span> <span class="nav-text">2. 查询最高分同学的 score 表。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-查询和-“李军”-同性别且同班的同学-name-。"><span class="nav-number">3.3.</span> <span class="nav-text">3. 查询和 “李军” 同性别且同班的同学 name 。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多表查询"><span class="nav-number">4.</span> <span class="nav-text">多表查询</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连接查询"><span class="nav-number">5.</span> <span class="nav-text">连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内连接"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">内连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#左外连接"><span class="nav-number">5.0.0.2.</span> <span class="nav-text">左外连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右外链接"><span class="nav-number">5.0.0.3.</span> <span class="nav-text">右外链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全外链接"><span class="nav-number">5.0.0.4.</span> <span class="nav-text">全外链接</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂查询例子"><span class="nav-number">6.</span> <span class="nav-text">复杂查询例子</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">史晨辉</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="图像增强在有关图片的训练中是不可或缺的部分，它能 读取图像： 1img_raw = tf.read_file(&apos;test.jpg&apos;)  解码图像： 1img = tf.image.decode_jpeg(img_raw, channels=3)  读取图像读取的是图片文件源信息，是字符串，解码后才是三维张量。 1. 翻转  上下翻转 1img = tf.image.flip_up_down(img">
+<meta name="description" content="图像增强在有关图片的训练中是不可或缺的部分。原有数据集中的图片的泛化程度不高，不能代表所有此类型的图片，并且数据集图片的清晰度、亮度、图片中物体的大小相对来说比较片面。在原有数据集上训练好模型后，拿来一张高亮度的图片就会有很大可能识别不出来。所以我们有必要扩充数据集来提高模型的泛化程度。 数据增强是对原有图片的亮度、对比度、色相等随机调整，这样能使数据集涵盖的方面更广，扩充了数据集。对提高模型的泛">
 <meta name="keywords" content="TensorFlow,机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TensorFlow 图像增强--随机翻转、随机亮度、对比度、色相等">
 <meta property="og:url" content="http://yoursite.com/2020/04/03/图像增强/index.html">
 <meta property="og:site_name" content="史晨辉的博客">
-<meta property="og:description" content="图像增强在有关图片的训练中是不可或缺的部分，它能 读取图像： 1img_raw = tf.read_file(&apos;test.jpg&apos;)  解码图像： 1img = tf.image.decode_jpeg(img_raw, channels=3)  读取图像读取的是图片文件源信息，是字符串，解码后才是三维张量。 1. 翻转  上下翻转 1img = tf.image.flip_up_down(img">
+<meta property="og:description" content="图像增强在有关图片的训练中是不可或缺的部分。原有数据集中的图片的泛化程度不高，不能代表所有此类型的图片，并且数据集图片的清晰度、亮度、图片中物体的大小相对来说比较片面。在原有数据集上训练好模型后，拿来一张高亮度的图片就会有很大可能识别不出来。所以我们有必要扩充数据集来提高模型的泛化程度。 数据增强是对原有图片的亮度、对比度、色相等随机调整，这样能使数据集涵盖的方面更广，扩充了数据集。对提高模型的泛">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-15T03:13:21.881Z">
+<meta property="og:updated_time" content="2020-04-15T03:52:16.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow 图像增强--随机翻转、随机亮度、对比度、色相等">
-<meta name="twitter:description" content="图像增强在有关图片的训练中是不可或缺的部分，它能 读取图像： 1img_raw = tf.read_file(&apos;test.jpg&apos;)  解码图像： 1img = tf.image.decode_jpeg(img_raw, channels=3)  读取图像读取的是图片文件源信息，是字符串，解码后才是三维张量。 1. 翻转  上下翻转 1img = tf.image.flip_up_down(img">
+<meta name="twitter:description" content="图像增强在有关图片的训练中是不可或缺的部分。原有数据集中的图片的泛化程度不高，不能代表所有此类型的图片，并且数据集图片的清晰度、亮度、图片中物体的大小相对来说比较片面。在原有数据集上训练好模型后，拿来一张高亮度的图片就会有很大可能识别不出来。所以我们有必要扩充数据集来提高模型的泛化程度。 数据增强是对原有图片的亮度、对比度、色相等随机调整，这样能使数据集涵盖的方面更广，扩充了数据集。对提高模型的泛">
 
 
 
@@ -330,7 +330,13 @@
       
 
       
-        <p>图像增强在有关图片的训练中是不可或缺的部分，它能</p>
+        <p>图像增强在有关图片的训练中是不可或缺的部分。原有数据集中的图片的泛化程度不高，不能代表所有此类型的图片，并且数据集图片的清晰度、亮度、图片中物体的大小相对来说比较片面。在原有数据集上训练好模型后，拿来一张高亮度的图片就会有很大可能识别不出来。所以我们有必要扩充数据集来提高模型的泛化程度。</p>
+<p>数据增强是对原有图片的亮度、对比度、色相等随机调整，这样能使数据集涵盖的方面更广，扩充了数据集。对提高模型的泛化程度很有必要。</p>
+<p>下面介绍一些TensorFlow中图片增强的常用方法。</p>
+<a id="more"></a>
+
+
+
 <p><strong>读取图像：</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img_raw = tf.read_file(<span class="string">'test.jpg'</span>)</span><br></pre></td></tr></table></figure>
 
@@ -410,7 +416,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.per_image_standardization(img)</span><br></pre></td></tr></table></figure>
 
 <p><strong>7. 随机旋转</strong></p>
+<p>（未尝试）</p>
+<p>旋转与翻转不同，旋转是坐标点的映射，TensorFlow中没有直接的库，需要自己写一个函数来操作。</p>
 <p><strong>8. 剪切</strong></p>
+<p>（未尝试）</p>
+<p>数据集图片中物体的大小会有不同，并且常常数量不平均。</p>
+<p>比如玉米种子图片中80%的图片中玉米粒比较多、大小适中，20%的图片玉米粒很大、一张图片中只有几粒。</p>
+<p>这样训练出的模型的泛化程度同样不高。</p>
+<p>随机剪切，同时将图像仍放缩成相同大小。这样让数据集中不同大小物体的图片数量分布均匀，有助于提高模型泛化程度。</p>
 <p><strong>完整的代码如下：</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readImg_3</span><span class="params">()</span>:</span></span><br><span class="line">    img_raw = tf.read_file(<span class="string">'test.jpg'</span>)</span><br><span class="line">    img = tf.image.decode_jpeg(img_raw, channels=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">        <span class="comment">#img = tf.image.random_brightness(img,0.5)</span></span><br><span class="line">        <span class="comment"># img = tf.image.adjust_brightness(img, -1)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.adjust_contrast(img,2)</span></span><br><span class="line">        <span class="comment">#img = tf.image.random_contrast(img, 2)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.adjust_saturation(img,0.5)</span></span><br><span class="line">        <span class="comment">#img = tf.image.random_saturation(img,-0.5,0.5)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.adjust_hue(img, 0.3)</span></span><br><span class="line">        <span class="comment">#img = tf.image.random_hue(img, 10)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 标准化</span></span><br><span class="line">        img = tf.image.per_image_standardization(img)</span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.random_flip_up_down(img)</span></span><br><span class="line">        img_ = img.eval()  <span class="comment"># 必须在会话中才能eval取值</span></span><br><span class="line"></span><br><span class="line">        print(img_.shape)</span><br><span class="line">        print(img_.dtype)</span><br><span class="line">        <span class="comment">#print(img_)</span></span><br><span class="line">    plt.imshow(img_)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">readImg_3()</span><br></pre></td></tr></table></figure>
 
@@ -446,8 +459,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/15/C++变量、限定符/" rel="next" title="C++变量、限定符">
-                <i class="fa fa-chevron-left"></i> C++变量、限定符
+              <a href="/2020/03/20/mysql-4-查询练习/" rel="next" title="SQL常用查询语句">
+                <i class="fa fa-chevron-left"></i> SQL常用查询语句
               </a>
             
           </div>
@@ -528,7 +541,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -550,7 +563,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
