@@ -638,6 +638,596 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/10/tfrecords使用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/10/tfrecords使用/" itemprop="url">TensorFlow中tfrecords的使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-10T00:00:00+08:00">
+                2020-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在训练模型的时候会有成千上万图片数据用来训练，如果一张张加载图片有两个缺点：一是速度慢，二是因为训练时还需要对图片进行增强（随即翻转、随机亮度调整等），会使程序代码变得复杂。</p>
+<p>TFRecord 便可以解决此问题，它能将数据进行序列化并存储在一个或一组文件中，这样就可以高效的读取数据。</p>
+<p>也就是将所有图片转换成二进制信息，全部存放在一个文件中。用的时候直接读取这个文件，并转换成dataset来使用。当然，二进制文件存放的还有图片的结构化信息（label、shape等）。</p>
+<p>TERecord的官方介绍链接：<a href="https://www.tensorflow.org/tutorials/load_data/tfrecord#write_the_tfrecord_file" target="_blank" rel="noopener">https://www.tensorflow.org/tutorials/load_data/tfrecord#write_the_tfrecord_file</a>  。不知道是版本原因还是什么，官方介绍中有的地方运行不出来。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/10/tfrecords使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/03/TensorFlow读取图片/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/03/TensorFlow读取图片/" itemprop="url">TensorFlow读取单张图片并显示</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-03T22:04:51+08:00">
+                2020-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我们知道图片数据是一个三维数组，每个像素点有RGB三个值，图片源文件是将这个三维数组按一定形式编码然后存储的。</p>
+<p>所以TensorFlow读取图片的步骤是：先直接按字节将图片源文件读取出，然后decode解码成三维张量（数组），张量再转换成ndarray，然后就可以显示图像了。</p>
+<p>其中读取图片的原始信息的函数有两个：<br>tf.gfile.FastGFile(‘test.jpg’, ‘rb’).read()<br>tf.read_file(‘test.jpg’)</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/03/TensorFlow读取图片/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/03/cast类型转换/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/03/cast类型转换/" itemprop="url">TensorFlow 数据类型转换 cast</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-03T00:00:00+08:00">
+                2020-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>tf.cast()函数的作用是执行 tensorflow 中张量数据类型转换，比如读入的图片如果是int8类型的，一般在要在训练前把图像的数据格式转换为float32。</p>
+<p><strong>cast定义：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cast(x, dtype, name=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>第一个参数 x:   待转换的数据（张量）</li>
+<li>第二个参数 dtype： 目标数据类型</li>
+<li>第三个参数 name： 可选参数，定义操作的名称</li>
+</ul>
+<p><strong>用法：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">t1 = tf.Variable([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br><span class="line">t2 = tf.cast(t1,dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/03/cast类型转换/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/03/图像增强/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/03/图像增强/" itemprop="url">TensorFlow 图像增强--随机翻转、随机亮度、对比度、色相等</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-03T00:00:00+08:00">
+                2020-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>图像增强在有关图片的训练中是不可或缺的部分，它能</p>
+<p><strong>读取图像：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img_raw = tf.read_file(<span class="string">'test.jpg'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>解码图像：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.decode_jpeg(img_raw, channels=<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>读取图像读取的是图片文件源信息，是字符串，解码后才是三维张量。</p>
+<p><strong>1. 翻转</strong></p>
+<ul>
+<li><p>上下翻转</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.flip_up_down(img)</span><br></pre></td></tr></table></figure>
+
+<p>​</p>
+</li>
+<li><p>左右反转</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.flip_left_right(img)</span><br></pre></td></tr></table></figure>
+
+<p>​</p>
+</li>
+<li><p>随机上下翻转</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.random_flip_up_down(img)</span><br></pre></td></tr></table></figure>
+
+<p>​</p>
+</li>
+<li><p>随机左右翻转</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.random_flip_left_right(img)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>2. 亮度 / 光照度</strong></p>
+<ul>
+<li><p>调整亮度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 后面那个参数时亮度，范围-1到1，</span></span><br><span class="line"><span class="comment"># -1最暗（全黑），0是原图，1会变最亮（全白）</span></span><br><span class="line">img = tf.image.adjust_brightness(img, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>随机亮度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># max_delta 表示随机亮度的范围是 [-max_delta,max_delta]</span></span><br><span class="line"><span class="comment"># max_delta 需要给一个大于零的数</span></span><br><span class="line"><span class="comment"># 设定一个范围可以防止亮度过大或过小导致图片失真</span></span><br><span class="line">img = tf.image.random_brightness(img,max_delta)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>3. 对比度</strong></p>
+<ul>
+<li><p>调整对比度</p>
+<p> 函数原型：def adjust_contrast(images, contrast_factor)</p>
+<p> 函数的官方解释：对比度是每个图像的每个通道（RGB）独立调整。<br> 对任意通道的运算是：(x - mean) * contrast_factor + mean ，<br> 其中x是此通道某点的像素值，mean是此通道像素的均值。<br> 官方并没有给 contrast_factor 的取值范围。</p>
+<p> contrast_factor 可以理解成对比度增加或减小多少倍，1是原图。</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.adjust_contrast(img,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>随机对比度</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># lower, upper 是对随机比度的限制范围 </span></span><br><span class="line">img = tf.image.random_contrast(img, lower, upper, seed=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>4. 饱和度</strong></p>
+<ul>
+<li><p>调整饱和度<br>调整饱和度也有一个对应的算法。1是原图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.adjust_saturation(img,<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>随机饱和度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># </span></span><br><span class="line">img = tf.image.random_saturation(image, lower, upper, seed=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>5. 色相 / 色度</strong></p>
+<ul>
+<li><p>调整色度</p>
+<p>色度的变化对图像颜色影响较大，一般delta取值[-0.1, 0.1] 就行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># delta 是调整值，取值范围是[-1,1]</span></span><br><span class="line">img = tf.image.adjust_hue(image, delta, name=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>随机色度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># delta 的随机范围是 [-max_delta, max_delta]</span></span><br><span class="line"><span class="comment"># max_delta 需要在区间[0, 0.5]</span></span><br><span class="line">img = tf.image.random_hue(image, max_delta, seed=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>6. 标准化</strong></p>
+<p>将图像的像素调整为均值为0，方差为1。</p>
+<p>标准化后图像像素直接显示出来效果会严重失真。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img = tf.image.per_image_standardization(img)</span><br></pre></td></tr></table></figure>
+
+<p><strong>7. 随机旋转</strong></p>
+<p><strong>8. 剪切</strong></p>
+<p><strong>完整的代码如下：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readImg_3</span><span class="params">()</span>:</span></span><br><span class="line">    img_raw = tf.read_file(<span class="string">'test.jpg'</span>)</span><br><span class="line">    img = tf.image.decode_jpeg(img_raw, channels=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">        <span class="comment">#img = tf.image.random_brightness(img,0.5)</span></span><br><span class="line">        <span class="comment"># img = tf.image.adjust_brightness(img, -1)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.adjust_contrast(img,2)</span></span><br><span class="line">        <span class="comment">#img = tf.image.random_contrast(img, 2)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.adjust_saturation(img,0.5)</span></span><br><span class="line">        <span class="comment">#img = tf.image.random_saturation(img,-0.5,0.5)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.adjust_hue(img, 0.3)</span></span><br><span class="line">        <span class="comment">#img = tf.image.random_hue(img, 10)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 标准化</span></span><br><span class="line">        img = tf.image.per_image_standardization(img)</span><br><span class="line"></span><br><span class="line">        <span class="comment">#img = tf.image.random_flip_up_down(img)</span></span><br><span class="line">        img_ = img.eval()  <span class="comment"># 必须在会话中才能eval取值</span></span><br><span class="line"></span><br><span class="line">        print(img_.shape)</span><br><span class="line">        print(img_.dtype)</span><br><span class="line">        <span class="comment">#print(img_)</span></span><br><span class="line">    plt.imshow(img_)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">readImg_3()</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/26/文学摘抄-非暴力沟通-1/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1136,274 +1726,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/25/test-md/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="史晨辉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/head.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="史晨辉的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/25/test-md/" itemprop="url">测试markdown语法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-25T11:59:13+08:00">
-                2019-05-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="测试markdown语法"><a href="#测试markdown语法" class="headerlink" title="测试markdown语法"></a>测试markdown语法</h1><p>通过什么来测试md语法呢，就随便写点内容吧。</p>
-<h2 id="二级标题，我是二级标题"><a href="#二级标题，我是二级标题" class="headerlink" title="二级标题，我是二级标题"></a>二级标题，我是二级标题</h2><p>​        自我理解，md是是为了开发者能更简单的设计出网页而设计的，直接写html比较心累，我不会写，哈哈，我只能看懂网页的源码，或者简单修改，让我徒手撸网页还真撸不出来。  由于md非常方便，写起来简单，并且转换成网页或者PDF后很直观，一些开发者就增加了它的格式，像cmd-markdown就支持流程图、latex数学公式这些高级东西，但是我在其他md测试的地方就不支持，有的渲染不出来。<br>这些高级东西，感觉md需要有一个统一的标准。</p>
-<blockquote>
-<p>ps：</p>
-<p>md两个格式之间要有一个换行，md里段落换行有点怪</p>
-<p>不同工具转换的格式不同可真不舒服，我用notepad++插件 ‘&gt;’ 竟然不能转换，有的格式会渲染不出来</p>
-<p>还有空格，多个空格好像只能显示一个，那段首2个空格怎么显示呢</p>
-</blockquote>
-<p>一些问题写的多了应该就知道了，这篇只是个测试md语法的，以后再写个详细的。</p>
-<h2 id="我还是二级标题"><a href="#我还是二级标题" class="headerlink" title="我还是二级标题"></a>我还是二级标题</h2><ul>
-<li><p>小生不才，github上没有发过东西，写过一些代码也都是学习的时候写的，有些自己感觉写的还行，但都是写完用过就放那了，啥时候要用了再找回来用。很多写的也没规范，注释都不全，以至于再翻出来用的时候还要想一遍代码的逻辑，逻辑有点复杂的就要像很久。过错过错，做一套六级题谢罪。</p>
-</li>
-<li><p>以前在服务器上搭过博客，因为太懒没维护，就荒了，后来用于微信公众号后台，然后就没后来了。在<a href="https://www.cnblogs.com/" target="_blank" rel="noopener">博客园</a>上发过一些学习性的文章，偶尔看到github.io上可以放静态博客，看着还挺好，就整了一个，<a href="https://shichenhui.github.io/" target="_blank" rel="noopener">here</a>，它是通过hexo将md文件渲染成html，上传到git上访问的，才有了这篇无聊的文章。</p>
-</li>
-<li><p>hexo好像有不同的渲染器，它们支持的md语法有所不同，有的可以渲染数学公式、流程图感觉很不错，有时间试试。</p>
-</li>
-</ul>
-<h3 id="md编辑（三级标题，我是三级标题）"><a href="#md编辑（三级标题，我是三级标题）" class="headerlink" title="md编辑（三级标题，我是三级标题）"></a>md编辑（三级标题，我是三级标题）</h3><p>网上有很多md在线编辑器：</p>
-<ol>
-<li><a href="http://tool.oschina.net/markdown/" target="_blank" rel="noopener">http://tool.oschina.net/markdown/</a></li>
-<li><a href="http://md.geekbang.org/v2/" target="_blank" rel="noopener">http://md.geekbang.org/v2/</a></li>
-<li><a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="noopener">https://www.zybuluo.com/mdeditor</a></li>
-</ol>
-<p>第三个是cmd-markdown，可以写出很好看的文章，然后可以导出html或者pdf，估计它的md文件有的效果hexo渲染不出来。</p>
-<p>另外还有很多md编辑软件，我用的是typora，感觉很好用。</p>
-<h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><p>我在网上看到一篇文章里说”看的越多，不会的越多”，挺有道理的，了解了很多，看似什么都知道，但要是让给别人讲，却什么也讲不出来。感觉我就是这样。</p>
-<p>知识是需要沉淀的，现在很多微信公众号推很多技术文章，浏览一遍就感觉自己懂得了，其实并没有。写博客挺有意义的，能将自己懂得的输出给别人自己会有更深的理解。记笔记是不能与文章比的，我以前以为把知识随笔记下，以后可以看就能够掌握，可是笔记写的太随意，并且不够全面，没写一篇文章理解的深。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/24/My-1-Post/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="史晨辉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/head.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="史晨辉的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/24/My-1-Post/" itemprop="url">My 1 Post</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-24T11:59:13+08:00">
-                2019-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1449,7 +1778,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1471,7 +1800,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
