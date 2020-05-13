@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="史晨辉的博客">
 <meta property="og:description" content="交叉熵在分类任务中非常常见。 在训练分类模型时，我们常用one-hot编码不同种类，如有三类结果时，A类为[1, 0, 0]，B类为[0, 1, 0]，C类为[0, 0, 1]。 对于一个样本，我们模型的输出结果假如为为三个数[9, 2, -2]，我们想把这三个数转化为三种类别的概率，并且三个概率和为1。不能简单的用a/(a+b+c)作为概率，因为概率不能有负值。通常用Softmax函数将三个数转">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-13T15:37:41.732Z">
+<meta property="og:updated_time" content="2020-05-13T15:44:02.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习中交叉熵的含义">
 <meta name="twitter:description" content="交叉熵在分类任务中非常常见。 在训练分类模型时，我们常用one-hot编码不同种类，如有三类结果时，A类为[1, 0, 0]，B类为[0, 1, 0]，C类为[0, 0, 1]。 对于一个样本，我们模型的输出结果假如为为三个数[9, 2, -2]，我们想把这三个数转化为三种类别的概率，并且三个概率和为1。不能简单的用a/(a+b+c)作为概率，因为概率不能有负值。通常用Softmax函数将三个数转">
@@ -758,6 +758,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
