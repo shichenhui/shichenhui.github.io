@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/3-180x185.png.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/3-32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/3-16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="collections模块基本介绍我们都知道，Python拥有一些内置的数据类型，比如str、list、tuple、dict等，collections模块是在这些内置数据类型的基础上，提供了几个额外的数据类型，以提供Python标准内建容器dict、list、set、tuple的替代选择。主要有：  namedtuple：生成可以使用名字来访问元素内容的tuple子类 deque: 双端队列，可以">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python--collections容器数据类型">
+<meta property="og:url" content="http://yoursite.com/2020/08/15/python--collections模块--容器数据类型/index.html">
+<meta property="og:site_name" content="史晨辉的博客">
+<meta property="og:description" content="collections模块基本介绍我们都知道，Python拥有一些内置的数据类型，比如str、list、tuple、dict等，collections模块是在这些内置数据类型的基础上，提供了几个额外的数据类型，以提供Python标准内建容器dict、list、set、tuple的替代选择。主要有：  namedtuple：生成可以使用名字来访问元素内容的tuple子类 deque: 双端队列，可以">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-08-19T07:56:42.093Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python--collections容器数据类型">
+<meta name="twitter:description" content="collections模块基本介绍我们都知道，Python拥有一些内置的数据类型，比如str、list、tuple、dict等，collections模块是在这些内置数据类型的基础上，提供了几个额外的数据类型，以提供Python标准内建容器dict、list、set、tuple的替代选择。主要有：  namedtuple：生成可以使用名字来访问元素内容的tuple子类 deque: 双端队列，可以">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/08/15/python--collections模块--容器数据类型/">
+
+
+
+
+
+  <title>Python--collections容器数据类型 | 史晨辉的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">史晨辉的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/15/python--collections模块--容器数据类型/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python--collections容器数据类型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-15T00:00:00+08:00">
+                2020-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="collections模块基本介绍"><a href="#collections模块基本介绍" class="headerlink" title="collections模块基本介绍"></a>collections模块基本介绍</h2><p>我们都知道，Python拥有一些内置的数据类型，比如str、list、tuple、dict等，collections模块是在这些内置数据类型的基础上，提供了几个额外的数据类型，以提供Python标准内建容器dict、list、set、tuple的替代选择。主要有：</p>
+<ol>
+<li>namedtuple：生成可以使用名字来访问元素内容的tuple子类</li>
+<li>deque: 双端队列，可以快速的从另外一侧追加和推出对象</li>
+<li>Counter: 计数器，主要用来计数</li>
+<li>OrderedDict: 有序字典</li>
+<li>defaultdict: 带有默认值的字典</li>
+</ol>
+<p>这些数据类型的作用主要有增加代码的可读性、方便用户操作数据、提高某些场景下数据的访问效率。</p>
+<a id="more"></a>
+
+<p>本文中的代码是在交互终端执行，<code>&gt;&gt;&gt;</code> 是输入的执行代码，代码下面跟的是运行结果。</p>
+<h2 id="1、nametuple"><a href="#1、nametuple" class="headerlink" title="1、nametuple()"></a>1、nametuple()</h2><p>namedtuple主要用来产生可以使用名称来访问元素的数据对象，通常用来增强代码的可读性， 在访问一些tuple类型的数据时尤其好用。</p>
+<p>比如你想用一个数据类型保存一个三维空间里的点坐标，可以直接用普通元祖来保存点的三个坐标(x, y, z)，这样像获取某个坐标时只能通过索引来获取。而用nametuple来保存三维点的坐标非常方便。</p>
+<p>首先导入相关包：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br></pre></td></tr></table></figure>
+
+<p>定义一个namedtuple数据类型，名为Point，之后我们就可以利用Point直接创建数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>Point = namedtuple(<span class="string">'Point'</span>, [<span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p1 = Point(<span class="number">2</span>, <span class="number">5</span>, <span class="number">8</span>)  <span class="comment"># 创建一个点</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p1</span><br><span class="line">Point(x=<span class="number">2</span>, y=<span class="number">5</span>, z=<span class="number">8</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p1.x</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>type(p1)</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">__main__</span>.<span class="title">Point</span>'&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看出定义的Point类型是继承了namedtuple的一个类。可以直接通过p1.x  访问点的x坐标。</p>
+<p>接着我们对p1点做一些进一步的操作。常用的函数有：</p>
+<ul>
+<li>Point._make()：利用list或迭代实例生成namedtuple</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = [<span class="number">12</span>, <span class="number">5</span>, <span class="number">10</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p2 = Point._make(b)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p2</span><br><span class="line">Point(x=<span class="number">12</span>, y=<span class="number">5</span>, z=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Point._asdict()：返回一个新的dict，它将字段名称映射到它们对应的值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = Point._asdict(p2)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d</span><br><span class="line">OrderedDict([(<span class="string">'x'</span>, <span class="number">12</span>), (<span class="string">'y'</span>, <span class="number">5</span>), (<span class="string">'z'</span>, <span class="number">10</span>)])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>dict(d)</span><br><span class="line">&#123;<span class="string">'x'</span>: <span class="number">12</span>, <span class="string">'y'</span>: <span class="number">5</span>, <span class="string">'z'</span>: <span class="number">10</span>&#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里看到Point.asdict() 返回的是OrderedDict类型，它需要通过dict() 来转换成字典类型。</p>
+<p>Point.asdict() 的返回类型与Python的版本有关，在 3.1 版更改: 返回一个 <a href="https://docs.python.org/zh-cn/3/library/collections.html#collections.OrderedDict" target="_blank" rel="noopener"><code>OrderedDict</code></a> 而不是 <a href="https://docs.python.org/zh-cn/3/library/stdtypes.html#dict" target="_blank" rel="noopener"><code>dict</code></a> 。</p>
+<p>在 3.8 版更改: 返回一个常规 <a href="https://docs.python.org/zh-cn/3/library/stdtypes.html#dict" target="_blank" rel="noopener"><code>dict</code></a> 而不是 <a href="https://docs.python.org/zh-cn/3/library/collections.html#collections.OrderedDict" target="_blank" rel="noopener"><code>OrderedDict</code></a>。 因为自 Python 3.7 起，常规字典已经保证有序。 如果需要 <a href="https://docs.python.org/zh-cn/3/library/collections.html#collections.OrderedDict" target="_blank" rel="noopener"><code>OrderedDict</code></a> 的额外特性，推荐的解决方案是将结果转换为需要的类型: <code>OrderedDict(nt._asdict())</code>。</p>
+<ul>
+<li>Point._replace()：改变元组的某个字段的值，因为元组默认是无法更改的，所以不能通过<code>p1.x = 10</code> 来修改它。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>p1.x = <span class="number">3</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">AttributeError: can<span class="string">'t set attribute</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&gt;&gt;&gt; p1._replace(x=20)</span></span><br><span class="line"><span class="string">Point(x=20, y=5, z=8)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Point(<code>**d</code>)：将一个字典转换成命名元组，需要使用<code>**</code> 操作符。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = &#123;<span class="string">'x'</span>:<span class="number">12</span>, <span class="string">'y'</span>:<span class="number">15</span>, <span class="string">'z'</span>:<span class="number">10</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d</span><br><span class="line">&#123;<span class="string">'x'</span>: <span class="number">12</span>, <span class="string">'y'</span>: <span class="number">15</span>, <span class="string">'z'</span>: <span class="number">10</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p3 = Point(**d)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p3</span><br><span class="line">Point(x=<span class="number">12</span>, y=<span class="number">15</span>, z=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、deque"><a href="#2、deque" class="headerlink" title="2、deque"></a>2、deque</h2><p>deque其实是 double-ended queue 的缩写，翻译过来就是双端队列，它最大的好处就是实现了从队列头部快速增加和取出对象。</p>
+<p>你可能会说，原生的list也可以通过pop、insert取出和添加对象啊，但是list这两种方法的复杂度是O(n)，而使用deque对象则是O(1)的复杂度，所以当你有队列的使用需求时，要记得使用deque。</p>
+<p>双向队列(deque)对象支持以下方法：</p>
+<ul>
+<li><p>append(<em>x</em>)：添加 <em>x</em> 到右端。</p>
+</li>
+<li><p>appendleft(<em>x</em>)：添加 <em>x</em> 到左端。</p>
+</li>
+<li><p>clear()：移除所有元素，使其长度为0.</p>
+</li>
+<li><p>copy()：创建一份浅拷贝。</p>
+</li>
+</ul>
+<hr>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.jb51.net/article/48771.htm" target="_blank" rel="noopener">https://www.jb51.net/article/48771.htm</a></p>
+<p><a href="https://docs.python.org/zh-cn/3/library/collections.html#collections.namedtuple" target="_blank" rel="noopener">https://docs.python.org/zh-cn/3/library/collections.html#collections.namedtuple</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/12/python--argparse命令行解析工具的用法/" rel="next" title="python--argparse命令行解析工具的用法">
+                <i class="fa fa-chevron-left"></i> python--argparse命令行解析工具的用法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/08/19/秋天到了/" rel="prev" title="8月19日 秋天快到了">
+                8月19日 秋天快到了 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/head.png" alt="史晨辉">
+            
+              <p class="site-author-name" itemprop="name">史晨辉</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#collections模块基本介绍"><span class="nav-number">1.</span> <span class="nav-text">collections模块基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1、nametuple"><span class="nav-number">2.</span> <span class="nav-text">1、nametuple()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、deque"><span class="nav-number">3.</span> <span class="nav-text">2、deque</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">4.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">史晨辉</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
