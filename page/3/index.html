@@ -259,6 +259,300 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/26/公式测试/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/26/公式测试/" itemprop="url">公式测试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-26T11:51:48+08:00">
+                2019-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>hexo修改一下渲染器是可以支持数学公式的，常见的LaTeX公式语法网上都有</p>
+<p>$ 可以让公式靠左显示</p>
+<p>$$ 是让公式占一行居中显示</p>
+<p>$T(n) = \Theta(n)$</p>
+<h2 id="几个常见的在x-0处展开的带佩亚诺余项的泰勒公式："><a href="#几个常见的在x-0处展开的带佩亚诺余项的泰勒公式：" class="headerlink" title="几个常见的在x=0处展开的带佩亚诺余项的泰勒公式："></a>几个常见的在x=0处展开的带佩亚诺余项的泰勒公式：</h2><p>$e^x = 1+x+\frac{1}{2!}x^2+…+\frac{1}{n!}x^n+o(x^n)$</p>
+<p>$sin(x) = x-\frac{1}{3!}x^3+…+\frac{(-1)^n}{(2n+1)!}x^{2n+1}+o(x^{2n+2})$</p>
+<p>$$cos(x) = 1-\frac{1}{2!}x^2 + … + \frac{(-1)^n}{(2n)!}x^{(2n)} + o(x^{2n+1})$$</p>
+<p>$$ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - … + (-1)^{n-1}\frac{x^n}{n} + o(x^n)$$</p>
+<p>$$(1+x)^m = 1+mx + \frac{m(m-1)}{2!}x^3 + … + \frac{m(m-1)…(m-n+1)}{n!}x^n + o(x^n)$$</p>
+<p>上面几个公式的写法如下：</p>
+<p>e^x = 1+x+\frac{1}{2!}x^2+…+\frac{1}{n!}x^n+o(x^n)</p>
+<p>sin(x) = x-\frac{1}{3!}x^3+…+\frac{(-1)^n}{(2n+1)!}x^{2n+1}+o(x^{2n+2})</p>
+<p>cos(x) = 1-\frac{1}{2!}x^2 + … + \frac{(-1)^n}{(2n)!}x^{(2n)} + o(x^{2n+1})</p>
+<p>ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - … + (-1)^{n-1}\frac{x^n}{n} + o(x^n)</p>
+<p>(1+x)^m = 1+mx + \frac{m(m-1)}{2!}x^3 + … + \frac{m(m-1)…(m-n+1)}{n!}x^n + o(x^n)</p>
+<ol>
+<li>公式的常用符号：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$$a_&#123;0&#125;^&#123;n&#125;$$      % 用$$进入数学环境；如果是单个$，则公式不换行。</span><br><span class="line"></span><br><span class="line">\begin&#123;equation*&#125;  % 也可以用\begin&#123;equation*&#125;开始数学环境，*代表公式不编号</span><br><span class="line">    a_&#123;1&#125;^&#123;n&#125;      % 上下标</span><br><span class="line">    \frac&#123;b&#125;&#123;a&#125;    % 分数</span><br><span class="line">    \sqrt&#123;a&#125;       % 根号</span><br><span class="line">    \sqrt[n]&#123;a&#125; \  % n次平方根，后面的&apos;\&apos;代表大空格（1/3m宽度）</span><br><span class="line">    \hat&#123;a&#125;    \   % 帽子</span><br><span class="line">    \bar&#123;a&#125;   \    % 一杆</span><br><span class="line">    \vec&#123;abc&#125;  \quad  % 向量箭头，后面的&apos;\quad&apos;代表quad空格（一个m的宽度）</span><br><span class="line">    \widehat&#123;face&#125;  \  % 大帽子</span><br><span class="line">    \overline&#123;average&#125; \  % 大一杆</span><br><span class="line">    \overrightarrow&#123;vector&#125;  % 大向量箭头</span><br><span class="line">\end&#123;equation*&#125;</span><br><span class="line"></span><br><span class="line">\begin&#123;equation*&#125;</span><br><span class="line">    \sum_&#123;i&#125;^&#123;N&#125;    % 求和</span><br><span class="line">    \prod_&#123;i&#125;^&#123;N&#125;   % 求乘积</span><br><span class="line">    \int_&#123;i&#125;^&#123;N&#125;   % 积分</span><br><span class="line">    \oint_&#123;i&#125;^&#123;N&#125;  % 环路积分</span><br><span class="line">    \pm  % 正负号</span><br><span class="line">    \mp  % 负正号</span><br><span class="line">    \times  % 乘</span><br><span class="line">    \div  % 除</span><br><span class="line">    \ast  \  % 星星，后面的&apos;\&apos;代表大空格（1/3m宽度）</span><br><span class="line">    \cdot   \  % 圆点</span><br><span class="line">    \neq   % 不等于</span><br><span class="line">    \approx  % 约等于</span><br><span class="line">    \leq  % 小于等于</span><br><span class="line">    \geq  % 大于等于</span><br><span class="line">    \lim\limits_&#123;N\to+\infty&#125;  % 或用 \lim_&#123;N\to+\infty&#125; 极限</span><br><span class="line">    \inf\limits_&#123;N\to+\infty&#125;  % 或用 \inf_&#123;N\to+\infty&#125;  </span><br><span class="line">\end&#123;equation*&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>一些符号<br><img src="/2019/05/26/公式测试/%E7%AC%A6%E5%8F%B7.png" alt="符号"></p>
+</li>
+<li><p>希腊字母</p>
+<p><img src="/2019/05/26/公式测试/%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D.png" alt="希腊字母"></p>
+</li>
+</ol>
+<p>参考链接：</p>
+<p><a href="https://mp.weixin.qq.com/s?src=11×tamp=1589382297&amp;ver=2336&amp;signature=k*vwBmMENf-W5V3lUzwlgC1t1lNJyaQ3jS9VOYkQ5flr4xrqO7oqLfoU8wNh8C6AZf4ABh*83SBERDco3eo43gz159LrQwwFNa3b0hWmLMn*jFComfJj2tn6yJbtIN93&amp;new=1" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?src=11×tamp=1589382297&amp;ver=2336&amp;signature=k*vwBmMENf-W5V3lUzwlgC1t1lNJyaQ3jS9VOYkQ5flr4xrqO7oqLfoU8wNh8C6AZf4ABh*83SBERDco3eo43gz159LrQwwFNa3b0hWmLMn*jFComfJj2tn6yJbtIN93&amp;new=1</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/25/test-md/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/25/test-md/" itemprop="url">测试markdown语法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-25T11:59:13+08:00">
+                2019-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="测试markdown语法"><a href="#测试markdown语法" class="headerlink" title="测试markdown语法"></a>测试markdown语法</h1><p>通过什么来测试md语法呢，就随便写点内容吧。</p>
+<h2 id="二级标题，我是二级标题"><a href="#二级标题，我是二级标题" class="headerlink" title="二级标题，我是二级标题"></a>二级标题，我是二级标题</h2><p>​        自我理解，md是是为了开发者能更简单的设计出网页而设计的，直接写html比较心累，我不会写，哈哈，我只能看懂网页的源码，或者简单修改，让我徒手撸网页还真撸不出来。  由于md非常方便，写起来简单，并且转换成网页或者PDF后很直观，一些开发者就增加了它的格式，像cmd-markdown就支持流程图、latex数学公式这些高级东西，但是我在其他md测试的地方就不支持，有的渲染不出来。<br>这些高级东西，感觉md需要有一个统一的标准。</p>
+<blockquote>
+<p>ps：</p>
+<p>md两个格式之间要有一个换行，md里段落换行有点怪</p>
+<p>不同工具转换的格式不同可真不舒服，我用notepad++插件 ‘&gt;’ 竟然不能转换，有的格式会渲染不出来</p>
+<p>还有空格，多个空格好像只能显示一个，那段首2个空格怎么显示呢</p>
+</blockquote>
+<p>一些问题写的多了应该就知道了，这篇只是个测试md语法的，以后再写个详细的。</p>
+<h2 id="我还是二级标题"><a href="#我还是二级标题" class="headerlink" title="我还是二级标题"></a>我还是二级标题</h2><ul>
+<li><p>小生不才，github上没有发过东西，写过一些代码也都是学习的时候写的，有些自己感觉写的还行，但都是写完用过就放那了，啥时候要用了再找回来用。很多写的也没规范，注释都不全，以至于再翻出来用的时候还要想一遍代码的逻辑，逻辑有点复杂的就要像很久。过错过错，做一套六级题谢罪。</p>
+</li>
+<li><p>以前在服务器上搭过博客，因为太懒没维护，就荒了，后来用于微信公众号后台，然后就没后来了。在<a href="https://www.cnblogs.com/" target="_blank" rel="noopener">博客园</a>上发过一些学习性的文章，偶尔看到github.io上可以放静态博客，看着还挺好，就整了一个，<a href="https://shichenhui.github.io/" target="_blank" rel="noopener">here</a>，它是通过hexo将md文件渲染成html，上传到git上访问的，才有了这篇无聊的文章。</p>
+</li>
+<li><p>hexo好像有不同的渲染器，它们支持的md语法有所不同，有的可以渲染数学公式、流程图感觉很不错，有时间试试。</p>
+</li>
+</ul>
+<h3 id="md编辑（三级标题，我是三级标题）"><a href="#md编辑（三级标题，我是三级标题）" class="headerlink" title="md编辑（三级标题，我是三级标题）"></a>md编辑（三级标题，我是三级标题）</h3><p>网上有很多md在线编辑器：</p>
+<ol>
+<li><a href="http://tool.oschina.net/markdown/" target="_blank" rel="noopener">http://tool.oschina.net/markdown/</a></li>
+<li><a href="http://md.geekbang.org/v2/" target="_blank" rel="noopener">http://md.geekbang.org/v2/</a></li>
+<li><a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="noopener">https://www.zybuluo.com/mdeditor</a></li>
+</ol>
+<p>第三个是cmd-markdown，可以写出很好看的文章，然后可以导出html或者pdf，估计它的md文件有的效果hexo渲染不出来。</p>
+<p>另外还有很多md编辑软件，我用的是typora，感觉很好用。</p>
+<h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><p>我在网上看到一篇文章里说”看的越多，不会的越多”，挺有道理的，了解了很多，看似什么都知道，但要是让给别人讲，却什么也讲不出来。感觉我就是这样。</p>
+<p>知识是需要沉淀的，现在很多微信公众号推很多技术文章，浏览一遍就感觉自己懂得了，其实并没有。写博客挺有意义的，能将自己懂得的输出给别人自己会有更深的理解。记笔记是不能与文章比的，我以前以为把知识随笔记下，以后可以看就能够掌握，可是笔记写的太随意，并且不够全面，没写一篇文章理解的深。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/24/My-1-Post/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -417,7 +711,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -428,7 +722,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
