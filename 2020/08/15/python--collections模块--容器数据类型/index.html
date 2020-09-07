@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="史晨辉的博客">
 <meta property="og:description" content="collections模块基本介绍我们都知道，Python拥有一些内置的数据类型，比如str、list、tuple、dict等，collections模块是在这些内置数据类型的基础上，提供了几个额外的数据类型，以提供Python标准内建容器dict、list、set、tuple的替代选择。主要有：  namedtuple：生成可以使用名字来访问元素内容的tuple子类 deque: 双端队列，可以">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-19T07:56:42.093Z">
+<meta property="og:updated_time" content="2020-09-07T14:54:14.280Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python--collections容器数据类型">
 <meta name="twitter:description" content="collections模块基本介绍我们都知道，Python拥有一些内置的数据类型，比如str、list、tuple、dict等，collections模块是在这些内置数据类型的基础上，提供了几个额外的数据类型，以提供Python标准内建容器dict、list、set、tuple的替代选择。主要有：  namedtuple：生成可以使用名字来访问元素内容的tuple子类 deque: 双端队列，可以">
@@ -362,7 +362,7 @@
       
 
       
-        <h2 id="collections模块基本介绍"><a href="#collections模块基本介绍" class="headerlink" title="collections模块基本介绍"></a>collections模块基本介绍</h2><p>我们都知道，Python拥有一些内置的数据类型，比如str、list、tuple、dict等，collections模块是在这些内置数据类型的基础上，提供了几个额外的数据类型，以提供Python标准内建容器dict、list、set、tuple的替代选择。主要有：</p>
+        <h1 id="collections模块基本介绍"><a href="#collections模块基本介绍" class="headerlink" title="collections模块基本介绍"></a>collections模块基本介绍</h1><p>我们都知道，Python拥有一些内置的数据类型，比如str、list、tuple、dict等，collections模块是在这些内置数据类型的基础上，提供了几个额外的数据类型，以提供Python标准内建容器dict、list、set、tuple的替代选择。主要有：</p>
 <ol>
 <li>namedtuple：生成可以使用名字来访问元素内容的tuple子类</li>
 <li>deque: 双端队列，可以快速的从另外一侧追加和推出对象</li>
@@ -374,7 +374,7 @@
 <a id="more"></a>
 
 <p>本文中的代码是在交互终端执行，<code>&gt;&gt;&gt;</code> 是输入的执行代码，代码下面跟的是运行结果。</p>
-<h2 id="1、nametuple"><a href="#1、nametuple" class="headerlink" title="1、nametuple()"></a>1、nametuple()</h2><p>namedtuple主要用来产生可以使用名称来访问元素的数据对象，通常用来增强代码的可读性， 在访问一些tuple类型的数据时尤其好用。</p>
+<h1 id="1、nametuple"><a href="#1、nametuple" class="headerlink" title="1、nametuple()"></a>1、nametuple()</h1><p>namedtuple主要用来产生可以使用名称来访问元素的数据对象，通常用来增强代码的可读性， 在访问一些tuple类型的数据时尤其好用。</p>
 <p>比如你想用一个数据类型保存一个三维空间里的点坐标，可以直接用普通元祖来保存点的三个坐标(x, y, z)，这样像获取某个坐标时只能通过索引来获取。而用nametuple来保存三维点的坐标非常方便。</p>
 <p>首先导入相关包：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br></pre></td></tr></table></figure>
@@ -407,7 +407,7 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = &#123;<span class="string">'x'</span>:<span class="number">12</span>, <span class="string">'y'</span>:<span class="number">15</span>, <span class="string">'z'</span>:<span class="number">10</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d</span><br><span class="line">&#123;<span class="string">'x'</span>: <span class="number">12</span>, <span class="string">'y'</span>: <span class="number">15</span>, <span class="string">'z'</span>: <span class="number">10</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p3 = Point(**d)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p3</span><br><span class="line">Point(x=<span class="number">12</span>, y=<span class="number">15</span>, z=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
 
-<h2 id="2、deque"><a href="#2、deque" class="headerlink" title="2、deque"></a>2、deque</h2><p>deque其实是 double-ended queue 的缩写，翻译过来就是双端队列，它最大的好处就是实现了从队列头部快速增加和取出对象。</p>
+<h1 id="2、deque"><a href="#2、deque" class="headerlink" title="2、deque"></a>2、deque</h1><p>deque其实是 double-ended queue 的缩写，翻译过来就是双端队列，它最大的好处就是实现了从队列头部快速增加和取出对象。</p>
 <p>你可能会说，原生的list也可以通过pop、insert取出和添加对象啊，但是list这两种方法的复杂度是O(n)，而使用deque对象则是O(1)的复杂度，所以当你有队列的使用需求时，要记得使用deque。</p>
 <p>双向队列(deque)对象支持以下方法：</p>
 <ul>
@@ -421,7 +421,7 @@
 </li>
 </ul>
 <hr>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.jb51.net/article/48771.htm" target="_blank" rel="noopener">https://www.jb51.net/article/48771.htm</a></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a href="https://www.jb51.net/article/48771.htm" target="_blank" rel="noopener">https://www.jb51.net/article/48771.htm</a></p>
 <p><a href="https://docs.python.org/zh-cn/3/library/collections.html#collections.namedtuple" target="_blank" rel="noopener">https://docs.python.org/zh-cn/3/library/collections.html#collections.namedtuple</a></p>
 
       
@@ -602,7 +602,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#collections模块基本介绍"><span class="nav-number">1.</span> <span class="nav-text">collections模块基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1、nametuple"><span class="nav-number">2.</span> <span class="nav-text">1、nametuple()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、deque"><span class="nav-number">3.</span> <span class="nav-text">2、deque</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">4.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collections模块基本介绍"><span class="nav-number">1.</span> <span class="nav-text">collections模块基本介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、nametuple"><span class="nav-number">2.</span> <span class="nav-text">1、nametuple()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、deque"><span class="nav-number">3.</span> <span class="nav-text">2、deque</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">4.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>

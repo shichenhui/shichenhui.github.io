@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/08/12/python--argparse命令行解析工具的用法/5.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/08/12/python--argparse命令行解析工具的用法/6.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/08/12/python--argparse命令行解析工具的用法/7.jpg">
-<meta property="og:updated_time" content="2020-08-15T03:18:40.909Z">
+<meta property="og:updated_time" content="2020-09-07T14:54:14.285Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python--argparse命令行解析工具的用法">
 <meta name="twitter:description" content="agrparse是python官方库汇中的一个命令行解析工具，主要作用是接收命令行中的参数，同时还有给出代码的usage功能。 就像在命令行终端中输入： &amp;gt;&amp;gt; python main.py --help 它会给出代码参数的说明。 &amp;gt;&amp;gt; python main.py --num 10 --name Tom 这是给代码传入num和name参数。">
@@ -376,7 +376,7 @@
 <p><code>&gt;&gt; python main.py --num 10 --name Tom</code> 这是给代码传入num和name参数。</p>
 <a id="more"></a>
 
-<h2 id="1、基本用法"><a href="#1、基本用法" class="headerlink" title="1、基本用法"></a>1、基本用法</h2><p>首先直接导入包、接受参数，其他什么也不做。</p>
+<h1 id="1、基本用法"><a href="#1、基本用法" class="headerlink" title="1、基本用法"></a>1、基本用法</h1><p>首先直接导入包、接受参数，其他什么也不做。</p>
 <p>代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.parse_args()</span><br></pre></td></tr></table></figure>
 
@@ -384,7 +384,7 @@
 <p><img src="/2020/08/12/python--argparse命令行解析工具的用法/1.jpg" alt="python--argparse库/1.jpg"></p>
 <p>结果分析：</p>
 <p>可以看出-h和–help能显示出代码的usage，但是上面代码中没有加任何usage，所以不会显示。</p>
-<h2 id="2、添加位置参数（positional-arguments）"><a href="#2、添加位置参数（positional-arguments）" class="headerlink" title="2、添加位置参数（positional arguments）"></a>2、添加位置参数（positional arguments）</h2><p>给代码传入参数。</p>
+<h1 id="2、添加位置参数（positional-arguments）"><a href="#2、添加位置参数（positional-arguments）" class="headerlink" title="2、添加位置参数（positional arguments）"></a>2、添加位置参数（positional arguments）</h1><p>给代码传入参数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">'num'</span>)  <span class="comment"># 接收参数</span></span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">print(type(args.num),args.num)</span><br></pre></td></tr></table></figure>
 
 <p>运行结果：</p>
@@ -394,7 +394,7 @@
 <p>从运行结果中可以看出<strong>接收到的参数都保存为str类型</strong>。</p>
 <p>程序加上-h获取usage时可以看出代码的用法<code>usage: learn.py [-h] num</code> ，表示可以接受一个num参数。</p>
 <p>num参数默认必选，如果不加参数会报错。</p>
-<h2 id="3、添加可选参数（optional-arguments）"><a href="#3、添加可选参数（optional-arguments）" class="headerlink" title="3、添加可选参数（optional arguments）"></a>3、添加可选参数（optional arguments）</h2><p>有两种方式添加，<code>-</code> 指定短参数，如<code>-h</code> ；<code>--</code> 指定长参数，如<code>--help</code> 。</p>
+<h1 id="3、添加可选参数（optional-arguments）"><a href="#3、添加可选参数（optional-arguments）" class="headerlink" title="3、添加可选参数（optional arguments）"></a>3、添加可选参数（optional arguments）</h1><p>有两种方式添加，<code>-</code> 指定短参数，如<code>-h</code> ；<code>--</code> 指定长参数，如<code>--help</code> 。</p>
 <p>这两种方式可以同时存在，也可以只存在一个。</p>
 <p>首先给出一个接收指定名字参数的例子：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">"-n"</span>, <span class="string">"--number"</span>, help=<span class="string">"input a number to precess"</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">print(args.number)</span><br></pre></td></tr></table></figure>
@@ -404,31 +404,31 @@
 <p>结果分析：</p>
 <p>第三行代码表示通过<code>-n</code> 或<code>--number</code> 来添加一个参数，这个参数保存在<code>number</code> 变量中，后面的帮助信息利用<code>-h</code> 或传参错误是或显示给使用者。</p>
 <p><code>-n</code> 和<code>--number</code> 指定的是同一个参数，这个参数保存在<code>args.number</code> 中，而不是<code>args.n</code> 中。</p>
-<h2 id="4、指定参数的数据类型"><a href="#4、指定参数的数据类型" class="headerlink" title="4、指定参数的数据类型"></a>4、指定参数的数据类型</h2><p>默认的参数类型为str，如果需要进行数据运算还需要再进行转换。argparser提供了对参数数据类型的限制和解析，如果输入的参数不类型不符合，则直接报错。</p>
+<h1 id="4、指定参数的数据类型"><a href="#4、指定参数的数据类型" class="headerlink" title="4、指定参数的数据类型"></a>4、指定参数的数据类型</h1><p>默认的参数类型为str，如果需要进行数据运算还需要再进行转换。argparser提供了对参数数据类型的限制和解析，如果输入的参数不类型不符合，则直接报错。</p>
 <p>如下面是计算输入参数的平方的例子：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">"-n"</span>, <span class="string">"--number"</span>, type=int, help=<span class="string">"input a number to process"</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">print(args.number**<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
 <p>运行结果：</p>
 <p><img src="/2020/08/12/python--argparse命令行解析工具的用法/4.jpg" alt="python--argparse库/4.jpg"></p>
-<h2 id="5、参数默认值"><a href="#5、参数默认值" class="headerlink" title="5、参数默认值"></a>5、参数默认值</h2><p>可以通过default来指定参数的默认值，当没有输入参数的时候，参数值就为default指定的值。</p>
+<h1 id="5、参数默认值"><a href="#5、参数默认值" class="headerlink" title="5、参数默认值"></a>5、参数默认值</h1><p>可以通过default来指定参数的默认值，当没有输入参数的时候，参数值就为default指定的值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">"-n"</span>, <span class="string">"--number"</span>, type=int, default=<span class="number">15</span>, help=<span class="string">"input a number to process"</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">print(args.number**<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
 <p>运行结果：</p>
 <p><img src="/2020/08/12/python--argparse命令行解析工具的用法/5.jpg" alt="python--argparse库/5.jpg"></p>
-<h2 id="6、限定参数的输入范围"><a href="#6、限定参数的输入范围" class="headerlink" title="6、限定参数的输入范围"></a>6、限定参数的输入范围</h2><p>可以利用<code>choices=[]</code> 来指定输入参数可选值。</p>
+<h1 id="6、限定参数的输入范围"><a href="#6、限定参数的输入范围" class="headerlink" title="6、限定参数的输入范围"></a>6、限定参数的输入范围</h1><p>可以利用<code>choices=[]</code> 来指定输入参数可选值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">"-n"</span>, <span class="string">"--number"</span>, type=int, choices=[<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>])</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">print(args.number**<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
 <p>运行结果：</p>
 <p><img src="/2020/08/12/python--argparse命令行解析工具的用法/6.jpg" alt="python--argparse库/6.jpg"></p>
 <p>当输入的参数不在choice指定的数中时会报错。</p>
-<h2 id="7、添加程序使用说明"><a href="#7、添加程序使用说明" class="headerlink" title="7、添加程序使用说明"></a>7、添加程序使用说明</h2><p>可以通过<code>argparse.ArgumentParser(description=&quot;calculate X to the power of Y&quot;)</code> 来给整个程序定义说明文档。</p>
+<h1 id="7、添加程序使用说明"><a href="#7、添加程序使用说明" class="headerlink" title="7、添加程序使用说明"></a>7、添加程序使用说明</h1><p>可以通过<code>argparse.ArgumentParser(description=&quot;calculate X to the power of Y&quot;)</code> 来给整个程序定义说明文档。</p>
 <p>同时可以通过parser.add_argument()中help参数来给每个变量添加说明。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">'Test，calculate the square of a number'</span>)</span><br><span class="line">parser.add_argument(<span class="string">"-n"</span>, <span class="string">"--number"</span>, type=int, choices=[<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>], help=<span class="string">'input a num from [11,12,13]'</span>)</span><br><span class="line">parser.add_argument(<span class="string">"-m"</span>, type=str,help=<span class="string">'input your name'</span>)</span><br><span class="line"></span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">print(args.number**<span class="number">2</span>)</span><br><span class="line">print(args.m)</span><br></pre></td></tr></table></figure>
 
 <p>运行结果：</p>
 <p><img src="/2020/08/12/python--argparse命令行解析工具的用法/7.jpg" alt="python--argparse库/7.jpg"></p>
 <hr>
-<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p><a href="https://www.jianshu.com/p/fef2d215b91d" target="_blank" rel="noopener">https://www.jianshu.com/p/fef2d215b91d</a></p>
+<h1 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h1><p><a href="https://www.jianshu.com/p/fef2d215b91d" target="_blank" rel="noopener">https://www.jianshu.com/p/fef2d215b91d</a></p>
 <p><a href="https://www.jb51.net/article/82746.htm" target="_blank" rel="noopener">https://www.jb51.net/article/82746.htm</a></p>
 
       
@@ -609,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、基本用法"><span class="nav-number">1.</span> <span class="nav-text">1、基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、添加位置参数（positional-arguments）"><span class="nav-number">2.</span> <span class="nav-text">2、添加位置参数（positional arguments）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、添加可选参数（optional-arguments）"><span class="nav-number">3.</span> <span class="nav-text">3、添加可选参数（optional arguments）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、指定参数的数据类型"><span class="nav-number">4.</span> <span class="nav-text">4、指定参数的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、参数默认值"><span class="nav-number">5.</span> <span class="nav-text">5、参数默认值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、限定参数的输入范围"><span class="nav-number">6.</span> <span class="nav-text">6、限定参数的输入范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、添加程序使用说明"><span class="nav-number">7.</span> <span class="nav-text">7、添加程序使用说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接："><span class="nav-number">8.</span> <span class="nav-text">参考链接：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、基本用法"><span class="nav-number">1.</span> <span class="nav-text">1、基本用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、添加位置参数（positional-arguments）"><span class="nav-number">2.</span> <span class="nav-text">2、添加位置参数（positional arguments）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、添加可选参数（optional-arguments）"><span class="nav-number">3.</span> <span class="nav-text">3、添加可选参数（optional arguments）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、指定参数的数据类型"><span class="nav-number">4.</span> <span class="nav-text">4、指定参数的数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5、参数默认值"><span class="nav-number">5.</span> <span class="nav-text">5、参数默认值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6、限定参数的输入范围"><span class="nav-number">6.</span> <span class="nav-text">6、限定参数的输入范围</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7、添加程序使用说明"><span class="nav-number">7.</span> <span class="nav-text">7、添加程序使用说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接："><span class="nav-number">8.</span> <span class="nav-text">参考链接：</span></a></li></ol></div>
             
 
           </div>
