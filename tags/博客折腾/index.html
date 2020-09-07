@@ -81,7 +81,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="史晨辉的博客">
-<meta property="og:url" content="http://yoursite.com/tags/博客测试/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/博客折腾/index.html">
 <meta property="og:site_name" content="史晨辉的博客">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
@@ -115,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/博客测试/">
+  <link rel="canonical" href="http://yoursite.com/tags/博客折腾/">
 
 
 
 
 
-  <title>标签: 博客测试 | 史晨辉的博客</title>
+  <title>标签: 博客折腾 | 史晨辉的博客</title>
   
 
 
@@ -251,7 +251,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>博客测试<small>标签</small>
+        <h1>博客折腾<small>标签</small>
         </h1>
       </div>
 
@@ -335,7 +335,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -357,7 +357,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -558,6 +558,28 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'wrr1R9hxKYK7wvpt73BM31Y1-gzGzoHsz',
+        appKey: 'MoOB1NdFJgW442URhnPGF5mf',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 

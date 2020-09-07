@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="博客测试,">
+  <meta name="keywords" content="博客折腾,">
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="文章里很多需要插入图片，一般都是写文章时现场截的图，文章里图片插入要提供图片url，但是本地的图片要上传到网上才有地址，很不方便。 搜了一下，hexo有上传本地图片的方法。  把博客配置文件_config.yml修改一个地方：post_asset_folder:true 安装插件：npm install hexo-asset-image –save  然后新建文章hexo new “img-tes">
-<meta name="keywords" content="博客测试">
+<meta name="keywords" content="博客折腾">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图片插入测试">
 <meta property="og:url" content="http://yoursite.com/2019/05/26/img-test/index.html">
@@ -88,7 +88,7 @@
 <meta property="og:description" content="文章里很多需要插入图片，一般都是写文章时现场截的图，文章里图片插入要提供图片url，但是本地的图片要上传到网上才有地址，很不方便。 搜了一下，hexo有上传本地图片的方法。  把博客配置文件_config.yml修改一个地方：post_asset_folder:true 安装插件：npm install hexo-asset-image –save  然后新建文章hexo new “img-tes">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/05/26/img-test/me.jpg">
-<meta property="og:updated_time" content="2019-05-26T16:04:40.524Z">
+<meta property="og:updated_time" content="2020-09-07T14:24:42.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图片插入测试">
 <meta name="twitter:description" content="文章里很多需要插入图片，一般都是写文章时现场截的图，文章里图片插入要提供图片url，但是本地的图片要上传到网上才有地址，很不方便。 搜了一下，hexo有上传本地图片的方法。  把博客配置文件_config.yml修改一个地方：post_asset_folder:true 安装插件：npm install hexo-asset-image –save  然后新建文章hexo new “img-tes">
@@ -308,6 +308,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/26/img-test/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/26/img-test/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -359,7 +369,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/博客测试/" rel="tag"># 博客测试</a>
+            <a href="/tags/博客折腾/" rel="tag"># 博客折腾</a>
           
         </div>
       
@@ -414,6 +424,9 @@
           
 
   
+    <div class="comments" id="comments">
+    </div>
+  
 
 
 
@@ -454,7 +467,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -476,7 +489,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -681,6 +694,28 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'wrr1R9hxKYK7wvpt73BM31Y1-gzGzoHsz',
+        appKey: 'MoOB1NdFJgW442URhnPGF5mf',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
