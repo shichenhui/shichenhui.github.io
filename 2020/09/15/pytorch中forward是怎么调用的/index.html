@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="机器学习,">
+  <meta name="keywords" content="pytorch,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="交叉熵在分类任务中非常常见。 在训练分类模型时，我们常用one-hot编码不同种类，如有三类结果时，A类为[1, 0, 0]，B类为[0, 1, 0]，C类为[0, 0, 1]。 对于一个样本，我们模型的输出结果假如为为三个数[9, 2, -2]，我们想把这三个数转化为三种类别的概率，并且三个概率和为1。不能简单的用a/(a+b+c)作为概率，因为概率不能有负值。通常用Softmax函数将三个数转">
-<meta name="keywords" content="机器学习">
+<meta name="description" content="前言TensorFlow 的API确实有点乱，1版本和2版本函数变化比较大，最不舒服的一点是，多个不同函数可以实现同一个功能。但是基于TF的keras 用起来倒挺方便。 今天试着用了用pytorch，发现定义网络时连接网络的forward函数在代码中都不需要被调用，很是困惑。搜了一下才知道，自己编写的网络的类继承nn.Module 类，nn.Module 里面有__call__ 方法，forwar">
+<meta name="keywords" content="pytorch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习中交叉熵的含义">
-<meta property="og:url" content="http://yoursite.com/2020/05/13/交叉熵的含义/index.html">
+<meta property="og:title" content="pytorch中forward方法是如何调用的">
+<meta property="og:url" content="http://yoursite.com/2020/09/15/pytorch中forward是怎么调用的/index.html">
 <meta property="og:site_name" content="史晨辉的博客">
-<meta property="og:description" content="交叉熵在分类任务中非常常见。 在训练分类模型时，我们常用one-hot编码不同种类，如有三类结果时，A类为[1, 0, 0]，B类为[0, 1, 0]，C类为[0, 0, 1]。 对于一个样本，我们模型的输出结果假如为为三个数[9, 2, -2]，我们想把这三个数转化为三种类别的概率，并且三个概率和为1。不能简单的用a/(a+b+c)作为概率，因为概率不能有负值。通常用Softmax函数将三个数转">
+<meta property="og:description" content="前言TensorFlow 的API确实有点乱，1版本和2版本函数变化比较大，最不舒服的一点是，多个不同函数可以实现同一个功能。但是基于TF的keras 用起来倒挺方便。 今天试着用了用pytorch，发现定义网络时连接网络的forward函数在代码中都不需要被调用，很是困惑。搜了一下才知道，自己编写的网络的类继承nn.Module 类，nn.Module 里面有__call__ 方法，forwar">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-13T15:44:02.402Z">
+<meta property="og:updated_time" content="2020-09-14T16:47:42.187Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习中交叉熵的含义">
-<meta name="twitter:description" content="交叉熵在分类任务中非常常见。 在训练分类模型时，我们常用one-hot编码不同种类，如有三类结果时，A类为[1, 0, 0]，B类为[0, 1, 0]，C类为[0, 0, 1]。 对于一个样本，我们模型的输出结果假如为为三个数[9, 2, -2]，我们想把这三个数转化为三种类别的概率，并且三个概率和为1。不能简单的用a/(a+b+c)作为概率，因为概率不能有负值。通常用Softmax函数将三个数转">
+<meta name="twitter:title" content="pytorch中forward方法是如何调用的">
+<meta name="twitter:description" content="前言TensorFlow 的API确实有点乱，1版本和2版本函数变化比较大，最不舒服的一点是，多个不同函数可以实现同一个功能。但是基于TF的keras 用起来倒挺方便。 今天试着用了用pytorch，发现定义网络时连接网络的forward函数在代码中都不需要被调用，很是困惑。搜了一下才知道，自己编写的网络的类继承nn.Module 类，nn.Module 里面有__call__ 方法，forwar">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/05/13/交叉熵的含义/">
+  <link rel="canonical" href="http://yoursite.com/2020/09/15/pytorch中forward是怎么调用的/">
 
 
 
 
 
-  <title>机器学习中交叉熵的含义 | 史晨辉的博客</title>
+  <title>pytorch中forward方法是如何调用的 | 史晨辉的博客</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/交叉熵的含义/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/15/pytorch中forward是怎么调用的/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="史晨辉">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">机器学习中交叉熵的含义</h1>
+          <h1 class="post-title" itemprop="name headline">pytorch中forward方法是如何调用的</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-13T00:00:00+08:00">
-                2020-05-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-15T00:00:00+08:00">
+                2020-09-15
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
+                  <a href="/categories/pytorch/" itemprop="url" rel="index">
+                    <span itemprop="name">pytorch</span>
                   </a>
                 </span>
 
@@ -333,8 +333,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/05/13/交叉熵的含义/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/05/13/交叉熵的含义/" itemprop="commentCount"></span>
+                <a href="/2020/09/15/pytorch中forward是怎么调用的/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/09/15/pytorch中forward是怎么调用的/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -356,7 +356,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  923
+                  441
                 </span>
               
 
@@ -381,33 +381,35 @@
       
 
       
-        <p>交叉熵在分类任务中非常常见。</p>
-<p>在训练分类模型时，我们常用one-hot编码不同种类，如有三类结果时，A类为[1, 0, 0]，B类为[0, 1, 0]，C类为[0, 0, 1]。</p>
-<p>对于一个样本，我们模型的输出结果假如为为三个数[9, 2, -2]，我们想把这三个数转化为三种类别的概率，并且三个概率和为1。不能简单的用a/(a+b+c)作为概率，因为概率不能有负值。通常用Softmax函数将三个数转化为三个概率，咱们先不管Softmax函数是怎么转化的，只需知道他把模型输出的三个数[9, 2, -2]转化成了概率[0.7, 0.2, 0.1] （随便写的概率值），然后可以看出这个样本应该A类。</p>
-<p>我们想利用梯度下降法训练模型使得输出的结果转化成概率后更接近[1, 0, 0]，有了这个想法后，损失函数就得定义成概率[1, 0, 0]和概率[0.7, 0.2, 0.1]之间的差异，然后通过梯度下降法修改参数使它们的差异逐渐减小。</p>
-<p>而交叉熵就是描述[1, 0, 0]、[0.7, 0.2, 0.1]这两组概率之间差异的一个东西。</p>
-<a id="more"></a>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>TensorFlow 的API确实有点乱，1版本和2版本函数变化比较大，最不舒服的一点是，多个不同函数可以实现同一个功能。但是基于TF的keras 用起来倒挺方便。</p>
+<p>今天试着用了用pytorch，发现定义网络时连接网络的forward函数在代码中都不需要被调用，很是困惑。搜了一下才知道，自己编写的网络的类继承<code>nn.Module</code> 类，<code>nn.Module</code> 里面有<code>__call__</code> 方法，forward函数是在传入数据时由<code>__call__</code> 方法调用的。</p>
+<h1 id="调用过程"><a href="#调用过程" class="headerlink" title="调用过程"></a>调用过程</h1><p>pytorch通常的用法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Module</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(Module, self).__init__()</span><br><span class="line">        <span class="comment"># ......</span></span><br><span class="line">       </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># ......</span></span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">data = .....  <span class="comment">#输入数据</span></span><br><span class="line"><span class="comment"># 实例化一个对象</span></span><br><span class="line">module = Module()</span><br><span class="line"><span class="comment"># 前向传播</span></span><br><span class="line">module(data)  </span><br><span class="line"><span class="comment"># 而不是使用下面的</span></span><br><span class="line"><span class="comment"># module.forward(data)</span></span><br></pre></td></tr></table></figure>
 
-<p>至于交叉熵是怎么描述两组概率之间的差异的，就需要了解一下交叉熵的公式定义了。</p>
-<p>首先得先了解一下什么是熵、相对熵。</p>
-<h1 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h1><p>熵是用来描述信息量的一个概念，比如我告诉你“明天会下雨”这句话包含了多少信息量。熵的大小与不确定度成正比，“昨天下雨了”这句话对于今天来说是已知的，所以这句话的不确定的为0，那么这句话的信息量也就为0。而“明天会下雨”，这句话就有信息量了，因为我们不知道明天会不会下雨。</p>
-<p>对于事件X，有n中可能的结果，则事件X的熵的计算公式为：</p>
-<p>$$H(X) =-  \sum_{i=1}^{n}p(x_i)log(p(x_i))$$</p>
-<p>当事件X的所有情况等概率的时候熵最大，因为这时候X的不确定性最高。</p>
-<h1 id="相对熵"><a href="#相对熵" class="headerlink" title="相对熵"></a>相对熵</h1><p>相对熵又称 KL 散度，如果对于同一随机变量x，有两种单独的概率分布P(x) 和 Q(x) ，相对熵是描述这两种概率分布差异的量。</p>
-<p>你可能会问机器学习中不用相对熵而用交叉熵呢，看完他们的各自公式定义你就明白了。</p>
-<p>相对熵计算公式：</p>
-<p>$$D_{KL} = \sum_{i=1}^{n}p(x_i)log(\frac{p(x_i)}{q(x_i)})$$</p>
-<p>n为事件的所有可能性，相对熵$D_{KL}$ 的值越小，表示q概率分布和p概率分布越接近。</p>
-<h1 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h1><p>把上面相对熵的公式推导一下：</p>
-<p>$$D_{KL} = \sum_{i=1}^{n}p(x_i)log(\frac{p(x_i)}{q(x_i)})$$<br>$=\sum_{i=1}^{n} p\left(x_{i}\right) \log \left(p\left(x_{i}\right)\right)-\sum_{i=1}^{n} p\left(x_{i}\right) \log \left(q\left(x_{i}\right)\right)$</p>
-<p>$=-H(p(x))+\left[-\sum_{i=1}^{n} p\left(x_{i}\right) \log \left(q\left(x_{i}\right)\right)\right]$</p>
-<p>结果的前一部分恰好就是p的熵，是个定值。</p>
-<p>所以交叉熵就取后面那部分：</p>
-<p>$H(p, q)=-\sum_{i=1}^{n} p\left(x_{i}\right) \log \left(q\left(x_{i}\right)\right)$</p>
-<p>所以交叉熵与相对熵意义基本一样，都能评估label和predicts的差异，而交叉熵更简单一点，所以机器学习中用交叉熵作为损失函数而不是相对熵。</p>
+<p>实际上</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">module(data)</span><br></pre></td></tr></table></figure>
+
+<p>就等价于：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">module.forward(data)</span><br></pre></td></tr></table></figure>
+
+<p>我们在pycharm中把光标放在nn.Module上，按Ctrl+B，可以定位到nn.Module类的源码，在里面找<code>__call__</code> ，可以找到这一行代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__call__ : Callable[..., Any] = _call_impl</span><br></pre></td></tr></table></figure>
+
+<p>看不懂这行代码的可以看这篇文章，</p>
+<p>它其实相当于：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__call__ = _call_impl</span><br></pre></td></tr></table></figure>
+
+<p>也就将给<code>_call_impl</code> 函数赋给了<code>__call__</code> 方法。</p>
+<p>找到 <code>_call_impl</code> 函数:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_call_impl</span><span class="params">(self, *input, **kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> hook <span class="keyword">in</span> itertools.chain(</span><br><span class="line">            _global_forward_pre_hooks.values(),</span><br><span class="line">            self._forward_pre_hooks.values()):</span><br><span class="line">        result = hook(self, input)</span><br><span class="line">        <span class="keyword">if</span> result <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> isinstance(result, tuple):</span><br><span class="line">                result = (result,)</span><br><span class="line">            input = result</span><br><span class="line">    <span class="keyword">if</span> torch._C._get_tracing_state():</span><br><span class="line">        result = self._slow_forward(*input, **kwargs)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        result = self.forward(*input, **kwargs)</span><br><span class="line">....</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<p>可以看到里面调用的forward函数。我们知道<code>__call__</code> 方法会在对象被调用时自动执行，所以说在你调用你定义的模型类创建的对象时，就像这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net = Net()</span><br><span class="line">net(x)  <span class="comment"># 调用对象</span></span><br></pre></td></tr></table></figure>
+
+<p>它就会自动调用forward函数，并把 x 参数传给forward来执行。</p>
+<hr>
 <p>参考链接：</p>
-<p><a href="https://www.jianshu.com/p/71d7fffcc552" target="_blank" rel="noopener">https://www.jianshu.com/p/71d7fffcc552</a></p>
+<p><a href="https://blog.csdn.net/xu380393916/article/details/97280035" target="_blank" rel="noopener">https://blog.csdn.net/xu380393916/article/details/97280035</a></p>
 
       
     </div>
@@ -425,7 +427,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+            <a href="/tags/pytorch/" rel="tag"># pytorch</a>
           
         </div>
       
@@ -438,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/20/numpy常用方法/" rel="next" title="NumPy 学习">
-                <i class="fa fa-chevron-left"></i> NumPy 学习
+              <a href="/2020/09/14/Python中typing模块与类型注解的使用方法/" rel="next" title="Python中typing模块与类型注解的使用方法">
+                <i class="fa fa-chevron-left"></i> Python中typing模块与类型注解的使用方法
               </a>
             
           </div>
@@ -447,10 +449,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/22/不开心的时候这样做/" rel="prev" title="不开心的时候怎么办">
-                不开心的时候怎么办 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -587,7 +585,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#熵"><span class="nav-number">1.</span> <span class="nav-text">熵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相对熵"><span class="nav-number">2.</span> <span class="nav-text">相对熵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#交叉熵"><span class="nav-number">3.</span> <span class="nav-text">交叉熵</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调用过程"><span class="nav-number">2.</span> <span class="nav-text">调用过程</span></a></li></ol></div>
             
 
           </div>
@@ -825,26 +823,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
