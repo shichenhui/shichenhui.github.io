@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="史晨辉的博客">
 <meta property="og:description" content="​    在编写一些程序的时候，灵活的使用@property能使程序更加的pythonic。@property的作用是能够将类中的一个函数变成此类属性来使用。 ​    举一个简单的例子，我们要编写一个圆的类，可以这样写： 1234class Circle():    def __init__(self, radius):        self.radius = radius       # 圆">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-25T07:33:56.000Z">
+<meta property="og:updated_time" content="2020-09-27T02:30:35.731Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python中@property的用法">
 <meta name="twitter:description" content="​    在编写一些程序的时候，灵活的使用@property能使程序更加的pythonic。@property的作用是能够将类中的一个函数变成此类属性来使用。 ​    举一个简单的例子，我们要编写一个圆的类，可以这样写： 1234class Circle():    def __init__(self, radius):        self.radius = radius       # 圆">
@@ -356,7 +356,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  1.3k
                 </span>
               
 
@@ -401,11 +401,13 @@
 
 <p>​    怎么样，这个圆变的智能了吧。</p>
 <p>​    我们分析一下圆类的代码，@property将挨着下面的diameter函数变成了Circle类的一个属性，访问 <code>my_circle.diameter</code> 时，得到的结果时diameter函数的返回值。下面的 @diameter.setter 装饰的函数，会在 <code>my_circle.diameter = 20</code> 修改diameter属性时被调用。这样我们的圆就能自动地调整半径和直径的大小了。</p>
+<hr>
 <p>​    @property的另一个用法是隐藏类的属性，防止被随意修改。我们知道用双下划线定义的属性不能被外部访问和修改，但是这样做不绝对，双下划线只是修改了属性的名字来达到不能访问的目的，实际上在外部通过修改后的名字还是能访问的到的。</p>
 <p>​    当我们不想让别人访问修改我们的内部变量时，我们可以用@property将真是的变量隐藏起来，就像这样：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataSet</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._images = <span class="number">1</span></span><br><span class="line">        self._labels = <span class="number">2</span></span><br><span class="line">        </span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">images</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._images</span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">labels</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._labels</span><br></pre></td></tr></table></figure>
 
 <p>​    这样，当别人在外部访问images时会以为它是一个正常的属性，但是修改它时就会报错 <code>AttributeError: can&#39;t set attribute</code> ，因为我们没有定义@images.setter装饰的函数，所以它是不能被修改的。</p>
+<hr>
 <p>property 共有3中功能，访问、修改、删除：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Goods</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._price = <span class="number">50</span></span><br><span class="line">    <span class="comment"># 访问</span></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">price</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._price</span><br><span class="line">      </span><br><span class="line">    <span class="comment"># 修改</span></span><br><span class="line"><span class="meta">    @price.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">price</span><span class="params">(self, new_price)</span>:</span></span><br><span class="line">        self._price = new_price</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 删除</span></span><br><span class="line"><span class="meta">    @price.deleter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">price</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'已删除price属性'</span>)</span><br></pre></td></tr></table></figure>
 
@@ -413,6 +415,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>g = Goods()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.price       <span class="comment"># 自动执行@property修饰的方法</span></span><br><span class="line"><span class="number">50</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.price = <span class="number">100</span>    <span class="comment"># 自动执行@price.setter修饰的方法</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.price</span><br><span class="line"><span class="number">100</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> g.price      <span class="comment">#自动执行@price.delete修饰的方法</span></span><br><span class="line">已删除price属性</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.price</span><br><span class="line"><span class="number">100</span></span><br></pre></td></tr></table></figure>
 
 <p>上面你可能会疑问，<code>del g.price</code> 不是将price属性删除了吗，怎么下面访问一下还有呢？这是因为<code>del g.price</code> 只是执行一下@price.delete 修饰的方法，你在这个方法里面写什么，它就只执行什么。</p>
+<hr>
 <p>看到这里，你可能已经知道@property 的作用和用法了。其实porperty并不只能通过装饰器来用，它还能在类中直接使用，property方法有4个参数：</p>
 <p><code>静态属性 = property( get_函数, set_函数, del_函数, doc )</code></p>
 <p>这4个参数中前三个与上面的访问、修改、删除相对应，最后一个doc参数用作说明用法。</p>
@@ -420,6 +423,11 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Goods</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._price = <span class="number">50</span></span><br><span class="line">    <span class="comment"># 访问</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_price</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._price</span><br><span class="line">      </span><br><span class="line">    <span class="comment"># 修改</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_price</span><span class="params">(self, new_price)</span>:</span></span><br><span class="line">        self._price = new_price</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 删除</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">del_price</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'已删除price属性'</span>)</span><br><span class="line">        </span><br><span class="line">    price = property(get_price, set_price, del_price)</span><br></pre></td></tr></table></figure>
 
 <p>上面这个例子与前面那个Goods类所实现的效果相同。</p>
+<hr>
+<p>​    实际开发中，灵活的使用@property可以帮助开发者逐渐完善数据模型。</p>
+<p>​    但是在实际工作中，我们经常接触到的对象，恰恰就是这种接口设计的比较糟糕的，或仅仅充当数据容器的对象。若是代码越写越多、功能越来越膨胀，或是参与项目的人都不考虑长远的维护事宜，就容易出现糟糕的局面。</p>
+<p>​    @property固然有效，但是也不能滥用，如果你发现自己正在不停地编写各种 @property 方法，那恐怕就意味着当前这个类的代码写的确实很差。此时，应该彻底重构该类，而不应该继续修补这套糟糕的设计。</p>
+<p>引自：《Effective Python》</p>
 
       
     </div>
@@ -535,7 +543,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -546,7 +554,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -557,7 +565,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -603,7 +611,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">史晨辉</span>
+  <span class="author" itemprop="copyrightHolder">豫ICP备17013015号</span>
 
   
     <span class="post-meta-divider">|</span>
@@ -613,7 +621,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">25.7k</span>
+    <span title="Site words total count">26.9k</span>
   
 </div>
 
