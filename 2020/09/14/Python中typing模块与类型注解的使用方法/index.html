@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="史晨辉的博客">
 <meta property="og:description" content="今天在研究pytorch的forward方法是怎么调用的时候看到一行以前没见过的语法： 12# torch.nn 里 module.py 中第746行  __call__ : Callable[..., Any] = _call_impl  以前没见过冒号这样的，也不知道Callable是什么。 去搜了一下发现，冒号是类型注解，Callable表示一种可调用的类型。 这行代码其实是将_call_i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-14T16:11:15.394Z">
+<meta property="og:updated_time" content="2020-11-05T10:22:38.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python中typing模块与类型注解的使用方法">
 <meta name="twitter:description" content="今天在研究pytorch的forward方法是怎么调用的时候看到一行以前没见过的语法： 12# torch.nn 里 module.py 中第746行  __call__ : Callable[..., Any] = _call_impl  以前没见过冒号这样的，也不知道Callable是什么。 去搜了一下发现，冒号是类型注解，Callable表示一种可调用的类型。 这行代码其实是将_call_i">
@@ -386,7 +386,7 @@
 
 <p>以前没见过冒号这样的，也不知道Callable是什么。</p>
 <p>去搜了一下发现，冒号是类型注解，Callable表示一种可调用的类型。</p>
-<p>这行代码其实是将<code>_call_impl</code> 方法赋值给了<code>__call__</code> 方法，相当于<br><code>__call__ = _call_impl</code> ，中间的（<code>: Callable[..., Any]</code> ）表示等号左边的需要是一个可调用的类型。</p>
+<p>这行代码其实是将<code>_call_impl</code> 方法赋值给了<code>__call__</code> 方法，相当于<br><code>__call__ = _call_impl</code> ，中间的（<code>: Callable[..., Any]</code> ）表示等号右边的需要是一个可调用的类型。</p>
 <a id="more"></a>
 
 <p>这里涉及到Python类型注解的使用和typing模块中的Callable类型。</p>
@@ -572,8 +572,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/09/15/Python中@property的用法/" rel="prev" title="Python中@property的用法">
-                Python中@property的用法 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/09/15/pytorch中forward是怎么调用的/" rel="prev" title="pytorch中forward方法是如何调用的">
+                pytorch中forward方法是如何调用的 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -656,7 +656,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -667,7 +667,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -678,7 +678,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -750,7 +750,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">28.5k</span>
+    <span title="Site words total count">29.9k</span>
   
 </div>
 
