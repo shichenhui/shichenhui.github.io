@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="史晨辉的博客">
 <meta property="og:description" content="FITS 文件简介FITS （Flexible Image Transport System, 普适图像传输系统）是天文上常用的数据文件存储格式，可以用来存储图像、光谱、表格这一类的数据。 fits文件结构：首先要知道fits文件由一个或多个HDU(Header/Data Units， 头、数据单元）的单元组成，其中第一个被称作Primary HDU（主HDU），主HDU可以包含1-999维的一个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-03-18T09:36:41.783Z">
+<meta property="og:updated_time" content="2021-03-19T02:10:57.070Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="光谱FITS文件结构">
 <meta name="twitter:description" content="FITS 文件简介FITS （Flexible Image Transport System, 普适图像传输系统）是天文上常用的数据文件存储格式，可以用来存储图像、光谱、表格这一类的数据。 fits文件结构：首先要知道fits文件由一个或多个HDU(Header/Data Units， 头、数据单元）的单元组成，其中第一个被称作Primary HDU（主HDU），主HDU可以包含1-999维的一个">
@@ -356,7 +356,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  633
+                  660
                 </span>
               
 
@@ -387,11 +387,11 @@
 
 <p>主HDU后面还可以跟多个扩展HDU来存储其他内容。</p>
 <p>每个HDU都由<code>Header Unit</code> 和<code>Data Unit</code> 组成，Header Unit 是类似类似字典类型的数据结构，形式一般为：关键字名称=值/关键字相关的注释，包含此数据观测的时间、望远镜参数、天气条件之类的信息。  Data Unit 存放的就是数据了，如numpy数组。</p>
-<h2 id="光谱fits文件"><a href="#光谱fits文件" class="headerlink" title="光谱fits文件"></a>光谱fits文件</h2><p>以 Lamost 光谱文件为例，它的文件命包含此条光谱的一些信息，如“spec_55916_B5591606_sp01_01.fits”：“spec” 表示天文光谱，“55916” 表示本地修正儒略日（一种天文上时间表示的方法），“B5591606” 代表天区的编号，“sp01” 代表光谱仪的标号，“001” 代表光谱仪中光纤的编号。</p>
-<p>Header Unit 中常用的字段有：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">LONGITUD、LATITUDE：观测地点的经度、纬度</span><br><span class="line">OBSID：唯一光谱编号</span><br><span class="line">OBSDATE：观测目标的日期</span><br><span class="line">PLANID：天区编号</span><br><span class="line">LMJD：本地修正儒略日</span><br><span class="line">FIBERID：光纤编号</span><br><span class="line">OBJTYPE：所观测到的星体的类型</span><br><span class="line">SN_U、SN_G、SN_R、SN_I、SN_Z：u、g、r、i、z波段的信噪比</span><br></pre></td></tr></table></figure>
+<h2 id="光谱fits文件"><a href="#光谱fits文件" class="headerlink" title="光谱fits文件"></a>光谱fits文件</h2><p>以 Lamost 光谱文件为例，首先它的文件命包含此条光谱的一些信息，如“spec_55916_B5591606_sp01_01.fits”：“spec” 表示天文光谱，“55916” 表示本地修正儒略日（一种天文上时间表示的方法），“B5591606” 代表天区的编号，“sp01” 代表光谱仪的标号，“001” 代表光谱仪中光纤的编号。</p>
+<p>它的HDU的Header Unit 中常用的字段有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">LONGITUD、LATITUDE：观测地点的经度、纬度</span><br><span class="line">OBSID：唯一光谱编号</span><br><span class="line">OBSDATE：观测目标的日期</span><br><span class="line">PLANID：天区编号</span><br><span class="line">LMJD：本地修正儒略日</span><br><span class="line">FIBERID：光纤编号</span><br><span class="line">OBJTYPE：所观测到的星体的类型</span><br><span class="line">SN_U、SN_G、SN_R、SN_I、SN_Z：u、g、r、i、z波段的信噪比</span><br><span class="line">Z: 红移值</span><br></pre></td></tr></table></figure>
 
-<p>Data Unit 是一个5行3909列的矩阵，每一行代表一种属性，分别是：或标志位、与标志位、波长、倒方差、流量（顺序可能不同）。</p>
+<p>Data Unit 是一个5行3909列的矩阵（不是所有光谱都是3909列），每一列代表一个波长，每一行代表一种属性，分别是：或标志位、与标志位、波长、倒方差、流量（顺序可能不同）。</p>
 <p><strong>天体测光波段</strong></p>
 <table>
 <thead>
@@ -665,7 +665,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -676,7 +676,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -687,7 +687,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -759,7 +759,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">32.1k</span>
+    <span title="Site words total count">32.7k</span>
   
 </div>
 
