@@ -82,15 +82,21 @@
 <meta name="description" content="FITS 文件简介FITS （Flexible Image Transport System, 普适图像传输系统）是天文上常用的数据文件存储格式，可以用来存储图像、光谱、表格这一类的数据。 fits文件结构：首先要知道fits文件由一个或多个HDU(Header/Data Units， 头、数据单元）的单元组成，其中第一个被称作Primary HDU（主HDU），主HDU可以包含1-999维的一个">
 <meta name="keywords" content="天文">
 <meta property="og:type" content="article">
-<meta property="og:title" content="光谱FITS文件结构">
+<meta property="og:title" content="FITS文件结构与读取">
 <meta property="og:url" content="http://yoursite.com/2021/03/16/fits文件结构/index.html">
 <meta property="og:site_name" content="史晨辉的博客">
 <meta property="og:description" content="FITS 文件简介FITS （Flexible Image Transport System, 普适图像传输系统）是天文上常用的数据文件存储格式，可以用来存储图像、光谱、表格这一类的数据。 fits文件结构：首先要知道fits文件由一个或多个HDU(Header/Data Units， 头、数据单元）的单元组成，其中第一个被称作Primary HDU（主HDU），主HDU可以包含1-999维的一个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-03-19T02:10:57.070Z">
+<meta property="og:image" content="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211008091827807.png">
+<meta property="og:image" content="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211007194022625.png">
+<meta property="og:image" content="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211008085454019.png">
+<meta property="og:image" content="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211008085402471.png">
+<meta property="og:image" content="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211008090448711.png">
+<meta property="og:updated_time" content="2021-10-08T01:19:12.070Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="光谱FITS文件结构">
+<meta name="twitter:title" content="FITS文件结构与读取">
 <meta name="twitter:description" content="FITS 文件简介FITS （Flexible Image Transport System, 普适图像传输系统）是天文上常用的数据文件存储格式，可以用来存储图像、光谱、表格这一类的数据。 fits文件结构：首先要知道fits文件由一个或多个HDU(Header/Data Units， 头、数据单元）的单元组成，其中第一个被称作Primary HDU（主HDU），主HDU可以包含1-999维的一个">
+<meta name="twitter:image" content="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211008091827807.png">
 
 
 
@@ -126,7 +132,7 @@
 
 
 
-  <title>光谱FITS文件结构 | 史晨辉的博客</title>
+  <title>FITS文件结构与读取 | 史晨辉的博客</title>
   
 
 
@@ -280,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">光谱FITS文件结构</h1>
+          <h1 class="post-title" itemprop="name headline">FITS文件结构与读取</h1>
         
 
         <div class="post-meta">
@@ -356,7 +362,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  660
+                  1.2k
                 </span>
               
 
@@ -391,7 +397,7 @@
 <p>它的HDU的Header Unit 中常用的字段有：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">LONGITUD、LATITUDE：观测地点的经度、纬度</span><br><span class="line">OBSID：唯一光谱编号</span><br><span class="line">OBSDATE：观测目标的日期</span><br><span class="line">PLANID：天区编号</span><br><span class="line">LMJD：本地修正儒略日</span><br><span class="line">FIBERID：光纤编号</span><br><span class="line">OBJTYPE：所观测到的星体的类型</span><br><span class="line">SN_U、SN_G、SN_R、SN_I、SN_Z：u、g、r、i、z波段的信噪比</span><br><span class="line">Z: 红移值</span><br></pre></td></tr></table></figure>
 
-<p>Data Unit 是一个5行3909列的矩阵（不是所有光谱都是3909列），每一列代表一个波长，每一行代表一种属性，分别是：或标志位、与标志位、波长、倒方差、流量（顺序可能不同）。</p>
+<p>Data Unit 是一个5行3909列的矩阵（不是所有光谱都是3909列），每一列代表一个波长，每一行代表一种属性，分别是：或标志位、与标志位、波长、倒方差、流量（顺序可能不同）。有两种fits格式，这里所说的是其中一种。</p>
 <p><strong>天体测光波段</strong></p>
 <table>
 <thead>
@@ -537,6 +543,31 @@
 <td align="center"></td>
 </tr>
 </tbody></table>
+<h1 id="fits文件读取"><a href="#fits文件读取" class="headerlink" title="fits文件读取"></a>fits文件读取</h1><p>利用astropy天文工具包读。</p>
+<p>文件不需要解压，fits、gz和bz2的都可以直接读。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> astropy.io <span class="keyword">import</span> fits</span><br><span class="line">hdu = fits.open(<span class="string">'spec-55859-F5902_sp01-001.fits'</span>)  <span class="comment"># 读取fits文件</span></span><br><span class="line">header,data = hdu[<span class="number">0</span>].header,hdu[<span class="number">0</span>].data    <span class="comment"># 获取第0个hdu里的信息，</span></span><br></pre></td></tr></table></figure>
+
+<p>hdu.info() 能打印fits信息</p>
+<p>读出来之后就可以用Matplotlib 把流量信息画出来，看一下光谱。图像的话应该也有相应的函数，不过我还没用到。</p>
+<p>例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> astropy.io <span class="keyword">import</span> fits</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">data = fits.open(<span class="string">'spec-55895-B9505_sp04-042.fits'</span>)</span><br><span class="line">x = a.data[<span class="number">2</span>]  <span class="comment"># 第3行是波长</span></span><br><span class="line">y = a.data[<span class="number">0</span>]  <span class="comment"># 第1行是光谱</span></span><br><span class="line">print(len(x),len(y))</span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211008091827807.png" alt="image-20211008091827807"></p>
+<h2 id="光谱fits文件-1"><a href="#光谱fits文件-1" class="headerlink" title="光谱fits文件"></a>光谱fits文件</h2><p>LAMOST发布的光谱fits文件有两种，一般见到的是第一种。</p>
+<p>第一种里面一个hdu包含5行信息，有用的信息有两行，第一行是流量，第三行是波长，如下图（下图软件叫fv）：</p>
+<p><img src="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211007194022625.png" alt="image-20211007194022625"></p>
+<p>另一种有两个hdu，第0个是信息，包含6行，第一行是流量，波长信息可以计算出来，hdu[0].header头信息中包含两个参数COEFF0：起始波长的log10对数，COEFF1：每个波长间隔的log10对数步长。比如这两个分别是3.5682和0.0001，第一个流量对应的波长就为<code>10**3.5682</code>，第二个流量对应的波长为<code>10**(3.5682+0.0001)</code>，后面依次以这个步长计算波长。如下面两个图：</p>
+<p><img src="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211008085454019.png" alt="image-20211008085454019"></p>
+<p><img src="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211008085402471.png" alt="image-20211008085402471"></p>
+<h2 id="图像fits文件"><a href="#图像fits文件" class="headerlink" title="图像fits文件"></a>图像fits文件</h2><p>天文图像主要用的是sdss发布的数据，其中一个区域的图像包含ugriz 5个波段的1图像（.fits.bz2）、合成伪彩图（.jpg）、星表（.fits），星表是标记出此图像中的所有天体在图像中的位置和其信息。</p>
+<p>读取方法与前面一样。</p>
+<p>打开一个g波段的图：</p>
+<p><img src="https://git-blog-img-1253434792.cos.ap-nanjing.myqcloud.com/image-20211008090448711.png" alt="image-20211008090448711"></p>
+<p>上图中，hdu[0] 里面是图像矩阵，下图是画出来的图像，这只是单个波段，画出来不是彩色。</p>
+<p>天体的赤经赤伟转成图像中的像素坐标方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> astropy.wcs <span class="keyword">import</span> WCS</span><br><span class="line">W = WCS(objid+<span class="string">'-r.fits.bz2'</span>)  <span class="comment"># 读取的不是星表，而是一个波段的图</span></span><br><span class="line">x1, y1 = W.all_world2pix(float(ra1), float(dec1), <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
 <p>参考链接：</p>
 <p><a href="https://hebl.china-vo.org/w/19387213" target="_blank" rel="noopener">https://hebl.china-vo.org/w/19387213</a></p>
 <p>LAMOST星体光谱FITS文件解析与信息提取，《电脑编程技巧与维护》2019年 第8期（<a href="http://www.cqvip.com/QK/98258X/201908/7100043482.html）" target="_blank" rel="noopener">http://www.cqvip.com/QK/98258X/201908/7100043482.html）</a></p>
@@ -665,7 +696,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -676,7 +707,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -687,7 +718,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -720,7 +751,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FITS-文件简介"><span class="nav-number">1.</span> <span class="nav-text">FITS 文件简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fits文件结构："><span class="nav-number">1.1.</span> <span class="nav-text">fits文件结构：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#光谱fits文件"><span class="nav-number">1.2.</span> <span class="nav-text">光谱fits文件</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FITS-文件简介"><span class="nav-number">1.</span> <span class="nav-text">FITS 文件简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fits文件结构："><span class="nav-number">1.1.</span> <span class="nav-text">fits文件结构：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#光谱fits文件"><span class="nav-number">1.2.</span> <span class="nav-text">光谱fits文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fits文件读取"><span class="nav-number">2.</span> <span class="nav-text">fits文件读取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#光谱fits文件-1"><span class="nav-number">2.1.</span> <span class="nav-text">光谱fits文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像fits文件"><span class="nav-number">2.2.</span> <span class="nav-text">图像fits文件</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -759,7 +790,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">34.4k</span>
+    <span title="Site words total count">36.4k</span>
   
 </div>
 

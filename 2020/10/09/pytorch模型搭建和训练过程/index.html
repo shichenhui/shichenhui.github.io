@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/3-180x185.png.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/3-32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/3-16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="构建数据加载器传入模型训练的数据常用DataLoader类封装（torch.utils.data.DataLoader），它能一次生成n条数据，即一个batch，n即设置的batch_size的大小，输出数据类型时Tensor，一般包含数据和对应的标签。同时可以设置是否乱序生成数据。如果数据集大小不能被batch_size整除，默认最后一个batch会取剩余的数据，如果想让剩余的省去来使每个bat">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytorch模型搭建与训练">
+<meta property="og:url" content="http://yoursite.com/2020/10/09/pytorch模型搭建和训练过程/index.html">
+<meta property="og:site_name" content="史晨辉的博客">
+<meta property="og:description" content="构建数据加载器传入模型训练的数据常用DataLoader类封装（torch.utils.data.DataLoader），它能一次生成n条数据，即一个batch，n即设置的batch_size的大小，输出数据类型时Tensor，一般包含数据和对应的标签。同时可以设置是否乱序生成数据。如果数据集大小不能被batch_size整除，默认最后一个batch会取剩余的数据，如果想让剩余的省去来使每个bat">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-10-10T07:58:57.477Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pytorch模型搭建与训练">
+<meta name="twitter:description" content="构建数据加载器传入模型训练的数据常用DataLoader类封装（torch.utils.data.DataLoader），它能一次生成n条数据，即一个batch，n即设置的batch_size的大小，输出数据类型时Tensor，一般包含数据和对应的标签。同时可以设置是否乱序生成数据。如果数据集大小不能被batch_size整除，默认最后一个batch会取剩余的数据，如果想让剩余的省去来使每个bat">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/10/09/pytorch模型搭建和训练过程/">
+
+
+
+
+
+  <title>pytorch模型搭建与训练 | 史晨辉的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">史晨辉的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/09/pytorch模型搭建和训练过程/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="史晨辉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="史晨辉的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pytorch模型搭建与训练</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-09T00:00:00+08:00">
+                2020-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/10/09/pytorch模型搭建和训练过程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/10/09/pytorch模型搭建和训练过程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="构建数据加载器"><a href="#构建数据加载器" class="headerlink" title="构建数据加载器"></a>构建数据加载器</h1><p>传入模型训练的数据常用DataLoader类封装（torch.utils.data.DataLoader），它能一次生成n条数据，即一个batch，n即设置的batch_size的大小，输出数据类型时Tensor，一般包含数据和对应的标签。同时可以设置是否乱序生成数据。如果数据集大小不能被batch_size整除，默认最后一个batch会取剩余的数据，如果想让剩余的省去来使每个batch数据量相同，可通过设置参数drop_last=True来实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_loader = torch.utils.data.DataLoader(dataset=dataset,batch_size=batch_size, shuffle=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果只需要训练数据，上面传入的dataset可以直接用list或者np.ndarray，如果要同时获得训练数据和标签，则需要对dataset用下面的方式构建一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GetLoader</span><span class="params">(torch.utils.data.Dataset)</span>:</span></span><br><span class="line">    <span class="comment"># 初始化函数，得到数据</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data_root, data_label)</span>:</span></span><br><span class="line">        self.data = data_root</span><br><span class="line">        self.label = data_label</span><br><span class="line"></span><br><span class="line">    <span class="comment"># index是根据batchsize划分数据后得到的索引，最后将data和对应的labels进行一起返回</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, index)</span>:</span></span><br><span class="line">        data = self.data[index]</span><br><span class="line">        labels = self.label[index]</span><br><span class="line">        <span class="keyword">return</span> data, labels</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 该函数返回数据大小长度，目的是DataLoader方便划分，如果不知道大小，DataLoader会一脸懵逼</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> len(self.data)</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<a href="https://chenllliang.github.io/2020/02/04/dataloader/" target="_blank" rel="noopener">https://chenllliang.github.io/2020/02/04/dataloader/</a></p>
+<h1 id="搭建模型"><a href="#搭建模型" class="headerlink" title="搭建模型"></a>搭建模型</h1><ol>
+<li>构建模型类，继承nn.Module</li>
+<li><code>__init__</code> 方法里初始化父类init，然后定义模型需要的层，如线性、卷积</li>
+<li>重写父类的forward方法，此方法传入模型输入，返回模型的输出。里面是利用init里定义的层来搭建网络。</li>
+</ol>
+<p>模型类里还可以定义一些其他需要的运算函数，在forward里面可以调用。哪些运算定义在init里，哪些运算定义在forward里没有明确规定，通常的约定是网络的层写在init里，forward里用这些层来搭建网络。</p>
+<p>调用很简单：y = model(x)，因为是继承的类，forward函数会在父类里面自动被调用，我们无需关心细节。返回的y是Tensor 类型。</p>
+<p>print(model) 可以来查看模型的结构。</p>
+<p>一个CNN例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		super(Net, self).__init__()</span><br><span class="line">		<span class="comment"># 1 input image channel, 6 output channels, 5x5 square convolution</span></span><br><span class="line">		<span class="comment"># kernel</span></span><br><span class="line">		self.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">6</span>, <span class="number">5</span>)</span><br><span class="line">		self.conv2 = nn.Conv2d(<span class="number">6</span>, <span class="number">16</span>, <span class="number">5</span>)</span><br><span class="line">		<span class="comment"># an affine operation: y = Wx + b</span></span><br><span class="line">		self.fc1 = nn.Linear(<span class="number">16</span> * <span class="number">5</span> * <span class="number">5</span>, <span class="number">120</span>)</span><br><span class="line">		self.fc2 = nn.Linear(<span class="number">120</span>, <span class="number">84</span>)</span><br><span class="line">		self.fc3 = nn.Linear(<span class="number">84</span>, <span class="number">10</span>)</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">		<span class="comment"># Max pooling over a (2, 2) window</span></span><br><span class="line">		x = F.max_pool2d(F.relu(self.conv1(x)), (<span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line">		<span class="comment"># If the size is a square you can only specify a single number</span></span><br><span class="line">		x = F.max_pool2d(F.relu(self.conv2(x)), <span class="number">2</span>)</span><br><span class="line">		x = x.view(<span class="number">-1</span>, self.num_flat_features(x))</span><br><span class="line">		x = F.relu(self.fc1(x))</span><br><span class="line">		x = F.relu(self.fc2(x))</span><br><span class="line">		x = self.fc3(x)</span><br><span class="line">		<span class="keyword">return</span> x</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">num_flat_features</span><span class="params">(self, x)</span>:</span></span><br><span class="line">		size = x.size()[<span class="number">1</span>:] <span class="comment"># all dimensions except the batch dimension</span></span><br><span class="line">		num_features = <span class="number">1</span></span><br><span class="line">		<span class="keyword">for</span> s <span class="keyword">in</span> size:</span><br><span class="line">		num_features *= s</span><br><span class="line">		<span class="keyword">return</span> num_features</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">net = Net()</span><br><span class="line">print(net)</span><br><span class="line">&gt;&gt;</span><br><span class="line">Net(</span><br><span class="line"> (conv1): Conv2d(<span class="number">1</span>, <span class="number">6</span>, kernel_size=(<span class="number">5</span>, <span class="number">5</span>), stride=(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line"> (conv2): Conv2d(<span class="number">6</span>, <span class="number">16</span>, kernel_size=(<span class="number">5</span>, <span class="number">5</span>), stride=(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line"> (fc1): Linear(in_features=<span class="number">400</span>, out_features=<span class="number">120</span>, bias=<span class="keyword">True</span>)</span><br><span class="line"> (fc2): Linear(in_features=<span class="number">120</span>, out_features=<span class="number">84</span>, bias=<span class="keyword">True</span>)   (fc3): Linear(in_features=<span class="number">84</span>, out_features=<span class="number">10</span>, bias=<span class="keyword">True</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h1 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h1><p>首先定义要训练的epoch数、batch_size大小、学习率learning_rate。</p>
+<p>检查否有可用的GPU，有的话就用GPU训练：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    <span class="comment"># model.cuda()</span></span><br><span class="line">    print(<span class="string">'cuda is OK!'</span>)</span><br><span class="line">    model = model.to(<span class="string">'cuda'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'cuda is NO!'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>定义损失函数和优化器，这些在pytorch中都有实现，选择合适的来用就行，想要自己定义损失函数也可以。</p>
+<p>训练的主要步骤如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(epochs):</span><br><span class="line">    model.train()   <span class="comment"># 开启训练模式</span></span><br><span class="line">    <span class="keyword">for</span> x, label <span class="keyword">in</span> dataloader:  <span class="comment"># 生成器，一个返回一个batch数据</span></span><br><span class="line">        optimizer.zero_grad()   <span class="comment"># 梯度清零</span></span><br><span class="line">        y = model(x)  <span class="comment"># 通过x求得y</span></span><br><span class="line">        loss = loss_function(y,label) <span class="comment"># 求损失</span></span><br><span class="line">        loss.backward()   <span class="comment"># 梯度反向传播</span></span><br><span class="line">        optimizer.step()  <span class="comment"># 更新参数</span></span><br><span class="line">        <span class="comment">##### 打印训练进度 ####</span></span><br><span class="line">        print(loss.item())</span><br><span class="line">        ...  <span class="comment"># 打印其他信息</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="保存模型"><a href="#保存模型" class="headerlink" title="保存模型"></a>保存模型</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), <span class="string">'./model_.pth'</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="加载、使用模型"><a href="#加载、使用模型" class="headerlink" title="加载、使用模型"></a>加载、使用模型</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model = Net()</span><br><span class="line">model.load_state_dict(torch.load(<span class="string">'vae.pth'</span>))</span><br><span class="line">model.eval()  <span class="comment"># 开启训练模式，防止参数改变</span></span><br><span class="line"></span><br><span class="line">data = np.loadtxt(<span class="string">'data.csv'</span>, delimiter=<span class="string">','</span>, dtype = np.float32)   <span class="comment"># 注意设定类型为np.float32</span></span><br><span class="line">data = torch.Tensor(data)  <span class="comment"># 将np数组转换为Tensor</span></span><br><span class="line">y_predict = model(data)  <span class="comment"># 预测</span></span><br></pre></td></tr></table></figure>
+
+<p>要注意的是从csv中读取时设定数据类型为np.float32，应为np读取默认为float64，而模型中参数为float32，不同类型无法运算。</p>
+<p>同时需要将数据转换为torch.Tensor()类型才能运算。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/27/Python按需生成类的属性/" rel="next" title="Python按需生成类的属性">
+                <i class="fa fa-chevron-left"></i> Python按需生成类的属性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/19/Python中的try,except,else,finally语句/" rel="prev" title="Python中的try/except/else/finally语句">
+                Python中的try/except/else/finally语句 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/head.png" alt="史晨辉">
+            
+              <p class="site-author-name" itemprop="name">史晨辉</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#构建数据加载器"><span class="nav-number">1.</span> <span class="nav-text">构建数据加载器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建模型"><span class="nav-number">2.</span> <span class="nav-text">搭建模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练模型"><span class="nav-number">3.</span> <span class="nav-text">训练模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保存模型"><span class="nav-number">4.</span> <span class="nav-text">保存模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加载、使用模型"><span class="nav-number">5.</span> <span class="nav-text">加载、使用模型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">豫ICP备17013015号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">36.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'wrr1R9hxKYK7wvpt73BM31Y1-gzGzoHsz',
+        appKey: 'MoOB1NdFJgW442URhnPGF5mf',
+        placeholder: '欢迎欢迎',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
